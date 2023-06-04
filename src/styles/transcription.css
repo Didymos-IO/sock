@@ -1,0 +1,29 @@
+.transcription-wrapper {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: .5s;
+  pointer-events: none;
+}
+
+.transcription-wrapper.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.transcription-box {
+  min-height: 81px;
+}
+
+.chat-box input {
+  box-shadow: none !important;
+  padding-right: 2rem !important;
+  height: 34px;
+  line-height: 34px;
+}
+
+.send-button {
+  padding: 4px 8px !important;
+  position: absolute;
+  right: .5rem;
+  bottom: .5rem;
+}

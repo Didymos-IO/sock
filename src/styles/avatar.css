@@ -1,0 +1,40 @@
+.avatar-container {
+  min-width: 1175px !important;
+  min-height: calc(100vh - 50px);
+}
+
+.avatar {
+  display: block;
+  width: 600px;
+  margin: 0;
+}
+
+.puppet-wrapper .card {
+  width: 634px;
+  height: 634px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.puppet-wrapper .avatar {
+  width: 600px;
+  height: 600px;
+  display: block;
+  left: 0;
+  top: 0;
+}
+
+.avatar .avatar-main {
+  width: 600px;
+  height: 600px;
+  display: block;
+  left: 0;
+  top: 0;
+}
+
+.avatar .left-eye,
+.avatar .right-eye,
+.avatar .mouth-img {
+  position: absolute;
+}

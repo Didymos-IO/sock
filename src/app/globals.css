@@ -1,0 +1,51 @@
+@import url('../styles/avatar.css');
+@import url('../styles/colors.css');
+@import url('../styles/header.css');
+@import url('../styles/log.css');
+@import url('../styles/settings.css');
+@import url('../styles/transcription.css');
+
+.custom-shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.5)!important;
+}
+
+.custom-shadow-inset-sm {
+  box-shadow: inset 0 .125rem .25rem rgba(0,0,0,.5)!important;
+}
+
+.fs-7 {
+  font-size: 0.875rem !important;
+}
+
+.fs-8 {
+  font-size: 0.75rem !important;
+}
+
+.mt-n1 {
+  margin-top: -0.25rem !important;
+}
+
+/** Mic-Wrapper ----------------------------------------------------------- */
+
+.mic-wrapper {
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+}
+
+/** Controls Wrapper ------------------------------------------------------- */
+
+.controls-wrapper {
+  width: calc(100% - 650px);
+  min-width: 500px; 
+}
+
+.activate-button {
+  width: 202px !important;
+}
+
+.stat-holder {
+  width: calc(100% - 210px);
+}

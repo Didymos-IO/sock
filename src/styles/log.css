@@ -1,0 +1,18 @@
+.log {
+  height: 524px;
+}
+
+.log-content { 
+  color: var(--lcars-red);
+  height: 450px;
+  overflow-y: scroll;
+}
+
+.log-content::-webkit-scrollbar {
+  display: none;
+}
+
+.log-anchor {
+  display: block;
+  height: 1px;
+}
