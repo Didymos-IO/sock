@@ -58,7 +58,13 @@ export const Header = (props: HeaderProps) => {
             Settings
           </NavLink>
           <li className="nav-item">
-            <a className={`nav-link text-white py-0 pe-0`}>Documentation</a>
+            <a
+              className={`nav-link text-white py-0 pe-0`}
+              href="https://github.com/Didymos-IO/sock/wiki"
+              target="_blank"
+            >
+              Documentation
+            </a>
           </li>
         </ul>
       </div>
