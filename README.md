@@ -22,9 +22,9 @@ Sock operates through a [Next.js](https://nextjs.org/) application running in yo
 
 For those with questions, thoughts, and discussion, we encourage you to use our repo's Issue Tracker and Discussions board. Help that's shared publicly there is valuable for the entire user base!
 
-- 🐛 Bugs? Feature Requests?: Visit our GitHub Issue Tracker
-- 🗨 Usage Questions? General Discussion?: Visit Our GitHub Discussions
-- 📖 Documentation?: Coming Soon on our GitHub Wiki
+- 🐛 Bugs? Feature Requests?: Visit our [GitHub Issue Tracker](https://github.com/Didymos-IO/sock/issues)
+- 🗨 Usage Questions? General Discussion?: Visit Our [GitHub Discussions](https://github.com/Didymos-IO/sock/discussions)
+- 📖 Documentation?: Coming Soon on our [GitHub Wiki](https://github.com/Didymos-IO/sock/wiki)
 - 🚗 Road Map
 
 ## 🏆 Features
