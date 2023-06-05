@@ -25,7 +25,7 @@ For those with questions, thoughts, and discussion, we encourage you to use our 
 - 🐛 Bugs? Feature Requests?: Visit our [GitHub Issue Tracker](https://github.com/Didymos-IO/sock/issues)
 - 🗨 Usage Questions? General Discussion?: Visit Our [GitHub Discussions](https://github.com/Didymos-IO/sock/discussions)
 - 📖 Documentation?: Coming Soon on our [GitHub Wiki](https://github.com/Didymos-IO/sock/wiki)
-- 🚗 Road Map: Coming Soon!
+- 🚗 Road Map: [Look right here](https://github.com/Didymos-IO/sock/wiki/Road-Map)
 
 ## 🏆 Features
 
@@ -49,6 +49,7 @@ Make sure to have your various dependencies installed.
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [Python 3.8+](https://www.python.org/downloads/)
 - [eSpeak](https://github.com/espeak-ng/espeak-ng/releases) (for Coqui-AI TTS models)
+- - [FFmpeg](https://ffmpeg.org/download.html) ([Install Instructions for Windows](https://phoenixnap.com/kb/ffmpeg-windows))
 
 **If using Coqui-AI for speech synthesis with GPU support**
 
@@ -113,7 +114,7 @@ To see a list of compatible models for /v1/chat/completions, refer to the [OpenA
 
 **TTS_USE_GPU**
 
-When using Coqui-AI for Sock's text-to-speech (TTS), you can set `TTS_USE_GPU=True` to use NVIDIA CUDA for GPU-based processing. If your system does not support CUDA, you can modify the `TTS_USE_GPU` value to `"False"`. This will use the CPU for TTS processing, which will result in a slower response time. Alternatively, you could utilize Web Speech for faster execution, albeit with its more robotic voices.
+When using Coqui-AI for Sock's text-to-speech (TTS), you can set `TTS_USE_GPU="True"` to use NVIDIA CUDA for GPU-based processing. If your system does not support CUDA, you can modify the `TTS_USE_GPU` value to `"False"`. This will use the CPU for TTS processing, which will result in a slower response time. Alternatively, you could utilize Web Speech for faster execution, albeit with its more robotic voices.
 
 ## 🧦 Running Sock
 
