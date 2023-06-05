@@ -114,7 +114,7 @@ To see a list of compatible models for /v1/chat/completions, refer to the [OpenA
 
 **TTS_USE_GPU**
 
-When using Coqui-AI for Sock's text-to-speech (TTS), you can set `TTS_USE_GPU=True` to use NVIDIA CUDA for GPU-based processing. If your system does not support CUDA, you can modify the `TTS_USE_GPU` value to `"False"`. This will use the CPU for TTS processing, which will result in a slower response time. Alternatively, you could utilize Web Speech for faster execution, albeit with its more robotic voices.
+When using Coqui-AI for Sock's text-to-speech (TTS), you can set `TTS_USE_GPU="True"` to use NVIDIA CUDA for GPU-based processing. If your system does not support CUDA, you can modify the `TTS_USE_GPU` value to `"False"`. This will use the CPU for TTS processing, which will result in a slower response time. Alternatively, you could utilize Web Speech for faster execution, albeit with its more robotic voices.
 
 ## 🧦 Running Sock
 
