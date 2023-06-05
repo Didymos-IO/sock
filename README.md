@@ -25,17 +25,17 @@ For those with questions, thoughts, and discussion, we encourage you to use our 
 - 🐛 Bugs? Feature Requests?: Visit our [GitHub Issue Tracker](https://github.com/Didymos-IO/sock/issues)
 - 🗨 Usage Questions? General Discussion?: Visit Our [GitHub Discussions](https://github.com/Didymos-IO/sock/discussions)
 - 📖 Documentation?: Coming Soon on our [GitHub Wiki](https://github.com/Didymos-IO/sock/wiki)
-- 🚗 Road Map
+- 🚗 Road Map: Coming Soon!
 
 ## 🏆 Features
 
-- Interactive Experience: Engage in lively conversations with the Sock puppet through either text or voice.
-- Personalized Puppet: Tailor the puppet to your liking by customizing its name, personality, and its focus on certain words.
-- Speech Synthesis: Infuse more life into your puppet by selecting from a variety of voice models and settings.
-- ChatGPT API Configuration: Easily access settings to adjust the behavior of the ChatGPT API for an optimized user experience.
-- Custom Avatar: Add a personal touch by overlaying one or more layers of your own images to create the puppet's avatar. Test and preview this avatar in the settings panel.
-- Behavior Settings: Gain granular control over the puppet's behavior. Adjust its chattiness, set it to respond immediately when called by name, and choose whether it should speak out loud or listen to your voice versus reading text.
-- Twitch Chat Integration: Coming soon! Seamlessly integrate your puppet with Twitch chat for a fully immersive streaming experience.
+- **Interactive Experience:** Engage in lively conversations with the Sock puppet through either text or voice.
+- **Personalized Puppet:** Tailor the puppet to your liking by customizing its name, personality, and its focus on certain words.
+- **Speech Synthesis:** Infuse more life into your puppet by selecting from a variety of voice models and settings.
+- **ChatGPT API Configuration:** Easily access settings to adjust the behavior of the ChatGPT API for an optimized user experience.
+- **Custom Avatar:** Add a personal touch by overlaying one or more layers of your own images to create the puppet's avatar. Test and preview this avatar in the settings panel.
+- **Behavior Settings:** Gain granular control over the puppet's behavior. Adjust its chattiness, set it to respond immediately when called by name, and choose whether it should speak out loud or listen to your voice versus reading text.
+- **Twitch Chat Integration:** _Coming soon!_ Seamlessly integrate your puppet with Twitch chat for a fully immersive streaming experience.
 
 ## 💾 Installation Guide
 
