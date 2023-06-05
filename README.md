@@ -4,7 +4,7 @@
 
 # 🧦 Sock
 
-Sock is an AI-controlled puppet capable of interacting with you via text or voice. It utilizes OpenAI's [Whisper model](https://openai.com/research/whisper) transcription, [ChatGPT chat completion API](https://platform.openai.com/docs/guides/gpt/chat-completions-api), and speech synthesis through the browser's [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) or [Coqui-AI's TTS](https://github.com/coqui-ai/TTS). Sock is designed to act as an AI co-host for Twitch streaming, or any application where you want to be able to converse and receive spoken responses from a Language Learning Model (LLM).
+Sock is an AI-controlled puppet that you can create your own custom avatar for and that is capable of interacting with you via text or voice. It utilizes OpenAI's [Whisper model](https://openai.com/research/whisper) transcription, [ChatGPT chat completion API](https://platform.openai.com/docs/guides/gpt/chat-completions-api), and speech synthesis through the browser's [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) or [Coqui-AI's TTS](https://github.com/coqui-ai/TTS). Sock is designed to act as an AI co-host for Twitch streaming, or any application where you want to be able to converse and receive spoken responses from a Language Learning Model (LLM).
 
 Sock operates through a [Next.js](https://nextjs.org/) application running in your web browser, which communicates with a [Python](https://www.python.org/downloads/) backend. This backend is responsible for managing the API calls to OpenAI, as well as running the Whisper transcription and Coqui-AI text-to-speech models.
 
