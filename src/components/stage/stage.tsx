@@ -17,17 +17,16 @@ import {
 export const Stage = () => {
   const context = useContext(StageContext)!;
   const settingsContext = useContext(SettingsContext)!;
-  const {
-    loadSettings,
-    settings: { identity, openAiApi, tts },
-  } = settingsContext;
+  const { index, loadSettings, settings } = settingsContext;
+  const profiles = settings.profiles;
+  const { identity, openAiApi, tts } = profiles[index];
   let recordingTimer: any;
 
   useEffect(() => {
     loadSettings()
-      .then((settings: Settings) => {
+      .then(() => {
         const wordsBeforeNext = Personality.wordsBeforeSpeakingNext(
-          settings.identity.chattiness
+          identity.chattiness
         );
         context.setWordCountBeforeResponse(wordsBeforeNext);
       })

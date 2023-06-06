@@ -5,8 +5,9 @@ import { SettingsContext } from "@/state";
 
 export const OpenAiSection = () => {
   const context = useContext(SettingsContext)!;
-  const { settings, setField } = context;
-  const { openAiApi } = settings;
+  const { index, settings, setField } = context;
+  const { profiles } = settings;
+  const { openAiApi } = profiles[index];
   const [accordion, setAccordion] = useState(0);
 
   const handleChangeField = (e: ChangeEvent<HTMLInputElement>) => {

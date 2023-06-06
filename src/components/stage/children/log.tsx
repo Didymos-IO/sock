@@ -4,8 +4,9 @@ import { SettingsContext, StageContext } from "@/state";
 
 export const Log = () => {
   const { chatHistory } = useContext(StageContext)!;
-  const { settings } = useContext(SettingsContext)!;
-  const { name } = settings.identity;
+  const { index, settings } = useContext(SettingsContext)!;
+  const { profiles } = settings;
+  const { name } = profiles[index].identity;
   const chatRef = useRef(null);
 
   useEffect(() => {

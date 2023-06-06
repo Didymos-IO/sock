@@ -6,9 +6,10 @@ import { SettingsContext } from "@/state";
 
 export const TtsSection = () => {
   const context = useContext(SettingsContext)!;
-  const { settings, setField, setCoquiAiOptionField, setWsOptionField } =
+  const { index, settings, setField, setCoquiAiOptionField, setWsOptionField } =
     context;
-  const { tts } = settings;
+  const { profiles } = settings;
+  const { tts } = profiles[index];
   const [speakers, setSpeakers] = useState<string[]>([]);
   const [testPhrase, setTestPhrase] = useState<string>(
     "Hello, my name is Sock."

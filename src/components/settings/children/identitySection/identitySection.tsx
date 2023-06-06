@@ -4,8 +4,9 @@ import { SettingsContext } from "@/state";
 
 export const IdentitySection = () => {
   const context = useContext(SettingsContext)!;
-  const { settings, setField } = context;
-  const { identity } = settings;
+  const { index, settings, setField } = context;
+  const { profiles } = settings;
+  const { identity } = profiles[index];
 
   const estimateTokens = (text: string) => {
     const words = text.split(" ").length;
