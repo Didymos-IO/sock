@@ -279,6 +279,15 @@ export const AvatarSection = () => {
             className="btn btn-primary bg-gradient"
             onClick={handleAddLayerClick}
           >
+            <span
+              style={{
+                marginTop: "-7px",
+                display: "inline-block",
+                verticalAlign: "middle",
+              }}
+            >
+              <Icons.PlusCircle />
+            </span>{" "}
             Add New Layer
           </button>
         </div>
