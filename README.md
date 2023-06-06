@@ -49,7 +49,7 @@ Make sure to have your various dependencies installed.
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [Python 3.10](https://www.python.org/downloads/)
 - [eSpeak](https://github.com/espeak-ng/espeak-ng/releases) (for Coqui-AI TTS models)
-- - [FFmpeg](https://ffmpeg.org/download.html) ([Install Instructions for Windows](https://phoenixnap.com/kb/ffmpeg-windows))
+- [FFmpeg](https://ffmpeg.org/download.html) ([Install Instructions for Windows](https://phoenixnap.com/kb/ffmpeg-windows))
 
 **If using Coqui-AI for speech synthesis with GPU support**
 
