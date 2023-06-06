@@ -20,9 +20,9 @@ export const Avatar = (props: AvatarProps) => {
   const [timeToBlink, setTimeToBlink] = useState(200);
   const [timeToOpenMouth, setTimeToOpenMouth] = useState(0);
   const [tick, setTick] = useState(0);
-  const {
-    settings: { avatar },
-  } = useContext(SettingsContext)!;
+  const { index, settings } = useContext(SettingsContext)!;
+  const { profiles } = settings;
+  const { avatar } = profiles[index];
   const { layers } = avatar;
   useEffect(() => {
     setTimeToBlink(getBlinkTime() + Date.now());

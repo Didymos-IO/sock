@@ -18,8 +18,9 @@ const blankLayer = {
 
 export const AvatarSection = () => {
   const context = useContext(SettingsContext)!;
-  const { settings, setField, setLayerField } = context;
-  const { avatar } = settings;
+  const { index, settings, setField, setLayerField } = context;
+  const { profiles } = settings;
+  const avatar = profiles[index].avatar;
   const { layers } = avatar;
   const [previewMode, setPreviewMode] = useState("0");
 

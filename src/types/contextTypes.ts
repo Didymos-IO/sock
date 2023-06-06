@@ -1,6 +1,10 @@
 import { ChatMessage } from "@/modules";
 
 export type SettingsContextType = {
+  addProfile: () => void;
+  changeIndex: (index: number) => void;
+  deleteCurrentProfile: () => void;
+  index: number;
   isDirty: boolean;
   loadSettings: () => Promise<Settings>;
   saveSettings: () => Promise<void>;
@@ -52,6 +56,10 @@ export type StageContextType = {
 };
 
 export type Settings = {
+  profiles: SettingsProfile[];
+};
+
+export type SettingsProfile = {
   saveFileVersion: string;
   identity: IdentitySettings;
   openAiApi: OpenAiApiSettings;
