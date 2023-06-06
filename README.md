@@ -146,7 +146,5 @@ If you get an error like `TypeError: argument of type 'NoneType' is not iterable
 
 ```
 cd backend
-python3 -m venv venv
-venv\scripts\activate
 pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
 ```
