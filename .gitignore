@@ -40,3 +40,4 @@ next-env.d.ts
 /backend/__pycache__/
 /interface/node_modules/
 /.vscode
+backend/speech_outputs/initial_tts.wav
