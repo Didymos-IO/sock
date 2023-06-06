@@ -4,7 +4,7 @@ import { ReactMic } from "react-mic";
 
 import { ChatMessage, Brain, Ears, Mouth, Personality } from "@/modules";
 import { SettingsContext, StageContext } from "@/state";
-import { Settings } from "@/types";
+import ComfyJS from "comfy.js";
 
 import {
   Avatar,
@@ -29,6 +29,7 @@ export const Stage = () => {
           identity.chattiness
         );
         context.setWordCountBeforeResponse(wordsBeforeNext);
+        testTwitch();
       })
       .catch((error) => {
         console.log(error);
@@ -169,6 +170,27 @@ export const Stage = () => {
       context.transcribedText + transcription,
       identity
     );
+  };
+
+  const testTwitch = () => {
+    console.log("ok");
+    ComfyJS.onChat = (user, message, flags, self, extra) => {
+      console.log("---------------------------------");
+      console.log("user: ", user);
+      console.log("message:", message);
+      console.log("flags: ", flags);
+      console.log("self: ", self);
+      console.log("extra: ", extra);
+    };
+    ComfyJS.onCommand = (user, command, message, flags, extra) => {
+      console.log("---------------------------------");
+      console.log("user: ", user);
+      console.log("command:", command);
+      console.log("message: ", message);
+      console.log("flags: ", flags);
+      console.log("extra: ", extra);
+    };
+    ComfyJS.Init("timor_jack");
   };
 
   return (
