@@ -8,7 +8,7 @@ Sock is an AI-controlled puppet that you can create your own custom avatar for a
 
 Sock operates through a [Next.js](https://nextjs.org/) application running in your web browser, which communicates with a [Python](https://www.python.org/downloads/) backend. This backend is responsible for managing the API calls to OpenAI, as well as running the Whisper transcription and Coqui-AI text-to-speech models.
 
-![Version](https://img.shields.io/badge/version-v0.6.0-blue)
+![Version](https://img.shields.io/badge/version-v0.6.1-blue)
 ![MIT License](https://img.shields.io/badge/license-MIT-green)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=flat&logo=openai&logoColor=white)
 ![Next JS](https://img.shields.io/badge/Next-black?style=flat&logo=next.js&logoColor=white)
@@ -47,9 +47,9 @@ Make sure to have your various dependencies installed.
 
 - [Node.js and NPM](https://nodejs.org/)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
-- [Python 3.8+](https://www.python.org/downloads/)
+- [Python 3.10](https://www.python.org/downloads/)
 - [eSpeak](https://github.com/espeak-ng/espeak-ng/releases) (for Coqui-AI TTS models)
-- - [FFmpeg](https://ffmpeg.org/download.html) ([Install Instructions for Windows](https://phoenixnap.com/kb/ffmpeg-windows))
+- [FFmpeg](https://ffmpeg.org/download.html) ([Install Instructions for Windows](https://phoenixnap.com/kb/ffmpeg-windows))
 
 **If using Coqui-AI for speech synthesis with GPU support**
 
@@ -139,3 +139,12 @@ yarn frontend
 Finally, open a browser and navigate to http://localhost:3000.
 
 You're good to go! 🎉
+
+## Troubleshooting
+
+If you get an error like `TypeError: argument of type 'NoneType' is not iterable` when you run `yarn backend`, you may need to forcibly reinstall whisper. Do the following in your terminal, which should help fix this:
+
+```
+cd backend
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+```
