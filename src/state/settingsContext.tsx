@@ -36,6 +36,10 @@ const blankProfile = {
       emotion: "Neutral",
     },
   },
+  twitch: {
+    channel: "",
+    triggers: [],
+  },
   avatar: {
     bgColor: "00FF00",
     layers: [
@@ -117,6 +121,14 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
     updateCurrentProfile(profile);
   };
 
+  const setTriggerField = (trigger: number, field: string, value: any) => {
+    let profile: any = getCurrentProfile();
+    let triggers = [...profile.twitch.triggers];
+    triggers[trigger][field] = value;
+    profile.twitch.triggers = triggers;
+    updateCurrentProfile(profile);
+  };
+
   const setCoquiAiOptionField = (field: string, value: any) => {
     let profile: any = getCurrentProfile();
     profile.tts.optionsCoquiAi[field] = value;
@@ -149,6 +161,7 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
       setField,
       setIsDirty,
       setLayerField,
+      setTriggerField,
       setCoquiAiOptionField,
       setWsOptionField,
     };

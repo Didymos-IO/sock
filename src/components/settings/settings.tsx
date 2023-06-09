@@ -8,6 +8,7 @@ import {
   IdentitySection,
   OpenAiSection,
   TtsSection,
+  TwitchSection,
 } from "./children";
 
 type SettingsProps = {};
@@ -145,6 +146,8 @@ export const Settings = (props: SettingsProps) => {
         <OpenAiSection />
         <hr />
         <TtsSection />
+        <hr />
+        <TwitchSection />
         <hr />
         <AvatarSection />
         <button

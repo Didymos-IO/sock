@@ -12,6 +12,7 @@ export type SettingsContextType = {
   setField: (section: string, field: string, value: any) => void;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   setLayerField: (layer: number, field: string, value: any) => void;
+  setTriggerField: (index: number, field: string, value: any) => void;
   setCoquiAiOptionField: (field: string, value: any) => void;
   setWsOptionField: (field: string, value: any) => void;
 };
@@ -64,6 +65,7 @@ export type SettingsProfile = {
   identity: IdentitySettings;
   openAiApi: OpenAiApiSettings;
   tts: TtsSettings;
+  twitch: TwitchSettings;
   avatar: AvatarSettings;
 };
 
@@ -117,4 +119,21 @@ export type AvatarLayerSettings = {
   altPose1: string;
   altPose2: string;
   default: string;
+};
+
+export type TwitchSettings = {
+  channel: string;
+  triggers: TwitchTrigger[];
+};
+
+export type TwitchTrigger = {
+  id: number;
+  description: string;
+  type: "command" | "redeem" | "wordcount" | "attention";
+  command: string;
+  rewardId: string;
+  role: "broadcaster" | "mod" | "vip" | "everyone" | "subscriber";
+  action: "tts" | "response" | "say";
+  text: string;
+  isActive: boolean;
 };
