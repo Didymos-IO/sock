@@ -18,12 +18,16 @@ export const getWordCount = (text: string): number => {
   return words.length;
 };
 
-export const getLocation = (): string => {
-  return window.location.hash.replace("#", "");
+export const getLocation = (): [string, string] => {
+  return [window.location.search.replace("?loc=", ""), window.location.hash];
 };
 
-export const setLocation = (hash: string): void => {
-  window.location.hash = hash;
+export const setLocation = (query: string, hash: string): void => {
+  let newQuery = `?loc=${query}`;
+  if (hash) {
+    newQuery += `#${hash}`;
+  }
+  window.history.pushState({}, "", newQuery);
 };
 
 export const Helpers = {

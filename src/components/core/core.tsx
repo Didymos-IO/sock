@@ -8,20 +8,28 @@ import { Helpers } from "@/modules";
 import { SettingsProvider, StageProvider } from "@/state";
 
 export default function Core() {
+  const [tab, setTab] = useState("identity");
   const [location, setLocation] = useState("");
 
   useEffect(() => {
-    const loc = Helpers.getLocation();
+    const [loc, tab] = Helpers.getLocation();
     setLocation(loc ? loc : "stage");
+    if (tab) {
+      setTab(tab);
+    }
   }, []);
 
   useEffect(() => {
-    Helpers.setLocation(location);
-  }, [location]);
+    Helpers.setLocation(location, location === "settings" ? tab : "");
+  }, [tab, location]);
+
+  const handleChangeTab = (tab: string) => {
+    setTab(tab);
+  };
 
   const handleSetLocation = (loc: string) => {
     setLocation(loc);
-    Helpers.setLocation(loc);
+    // Helpers.setLocation(loc, loc === "settings" ? tab : "");
   };
 
   return (
@@ -29,7 +37,9 @@ export default function Core() {
       <SettingsProvider>
         <StageProvider>
           <Header location={location} onSetLocation={handleSetLocation} />
-          {location === "settings" && <Settings />}
+          {location === "settings" && (
+            <Settings onChangeTab={handleChangeTab} />
+          )}
           {location === "stage" && <Stage />}
         </StageProvider>
       </SettingsProvider>

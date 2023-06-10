@@ -3,8 +3,9 @@ import { ChangeEvent, useContext, useState } from "react";
 import { Icons } from "@/components";
 import { Avatar } from "@/components/stage/children";
 import { SettingsContext } from "@/state";
+import { AvatarLayerSettings } from "@/types";
 
-const blankLayer = {
+const blankLayer: AvatarLayerSettings = {
   id: 0,
   name: "",
   path: "",

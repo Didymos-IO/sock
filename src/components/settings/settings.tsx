@@ -7,15 +7,20 @@ import {
   AvatarSection,
   IdentitySection,
   OpenAiSection,
+  SettingsNav,
   TtsSection,
   TwitchSection,
 } from "./children";
 
-type SettingsProps = {};
+type SettingsProps = {
+  onChangeTab: (tab: string) => void;
+};
 
 export const Settings = (props: SettingsProps) => {
+  const { onChangeTab } = props;
   const context = useContext(SettingsContext)!;
   const {
+    activeTab,
     addProfile,
     changeIndex,
     deleteCurrentProfile,
@@ -36,6 +41,10 @@ export const Settings = (props: SettingsProps) => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    onChangeTab(activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     if (isDirty) {
@@ -75,84 +84,17 @@ export const Settings = (props: SettingsProps) => {
   return (
     <div className="container-xxl py-4 bd-gray-800 settings-container">
       <form onSubmit={onFormSubmit}>
-        <div className="row mb-3">
-          <div className="col-3">
-            <div className="d-inline-block pt-2 me-3">Profile:</div>
-            <select
-              className="form-select d-inline-block w-75"
-              value={index}
-              onChange={handleIndexChange}
-            >
-              {profiles.map((profile, profileIndex) => {
-                const key = profileIndex;
-                return (
-                  <option
-                    key={`option-${key}`}
-                    value={profileIndex}
-                  >{`[${profileIndex}] ${
-                    profile.identity.name !== ""
-                      ? profile.identity.name
-                      : "Unnamed"
-                  }`}</option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="col-9 text-end">
-            <button
-              type="button"
-              className="btn btn-primary bg-gradient me-2"
-              onClick={addProfile}
-            >
-              <span
-                style={{
-                  marginTop: "-7px",
-                  display: "inline-block",
-                  verticalAlign: "middle",
-                }}
-              >
-                <Icons.PlusCircle />
-              </span>{" "}
-              Add New Profile
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger bg-delete bg-gradient"
-              disabled={profiles.length === 1}
-              onClick={handleDeleteProfile}
-            >
-              {" "}
-              <span
-                style={{
-                  marginTop: "-7px",
-                  display: "inline-block",
-                  verticalAlign: "middle",
-                }}
-              >
-                <Icons.Trash />
-              </span>{" "}
-              Delete Profile
-            </button>
-          </div>
-        </div>
+        <SettingsNav />
+        <hr />
+        {activeTab === "identity" && <IdentitySection />}
+        {activeTab === "gpt" && <OpenAiSection />}
+        {activeTab === "voice" && <TtsSection />}
+        {activeTab === "twitch" && <TwitchSection />}
+        {activeTab === "avatar" && <AvatarSection />}
+        <hr />
         <button
           type="submit"
-          className="btn btn-primary mb-3 w-100 bg-gradient"
-        >
-          {buttonText}
-        </button>
-        <IdentitySection />
-        <hr />
-        <OpenAiSection />
-        <hr />
-        <TtsSection />
-        <hr />
-        <TwitchSection />
-        <hr />
-        <AvatarSection />
-        <button
-          type="submit"
-          className="btn btn-primary mb-3 w-100 bg-gradient"
+          className="btn btn-primary mb-3 float-end px-4 bg-gradient"
         >
           {buttonText}
         </button>

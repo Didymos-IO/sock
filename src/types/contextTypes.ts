@@ -1,6 +1,7 @@
 import { ChatMessage } from "@/modules";
 
 export type SettingsContextType = {
+  activeTab: string;
   addProfile: () => void;
   changeIndex: (index: number) => void;
   deleteCurrentProfile: () => void;
@@ -9,6 +10,7 @@ export type SettingsContextType = {
   loadSettings: () => Promise<Settings>;
   saveSettings: () => Promise<void>;
   settings: Settings;
+  setActiveTab: (tab: string) => void;
   setField: (section: string, field: string, value: any) => void;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   setLayerField: (layer: number, field: string, value: any) => void;
@@ -129,11 +131,12 @@ export type TwitchSettings = {
 export type TwitchTrigger = {
   id: number;
   description: string;
-  type: "command" | "redeem" | "wordcount" | "attention";
+  type: "command" | "reward" | "wordcount" | "attention";
   command: string;
   rewardId: string;
   role: "broadcaster" | "mod" | "vip" | "everyone" | "subscriber";
   action: "tts" | "response" | "say";
   text: string;
   isActive: boolean;
+  cooldown: number;
 };

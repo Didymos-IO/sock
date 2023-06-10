@@ -67,6 +67,7 @@ export const SettingsContext = createContext<SettingsContextType | undefined>(
 );
 
 export const SettingsProvider = (props: SettingsProviderProps) => {
+  const [activeTab, setActiveTab] = useState("identity");
   const [index, setIndex] = useState(0);
   const [isDirty, setIsDirty] = useState(false);
   const [settings, setSettings] = useState<Settings>(initialSettings);
@@ -150,6 +151,7 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
 
   const context = useMemo(() => {
     return {
+      activeTab,
       addProfile,
       changeIndex,
       deleteCurrentProfile,
@@ -158,6 +160,7 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
       loadSettings,
       saveSettings,
       settings,
+      setActiveTab,
       setField,
       setIsDirty,
       setLayerField,
@@ -166,7 +169,7 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
       setWsOptionField,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, isDirty, settings]);
+  }, [activeTab, index, isDirty, settings]);
 
   const { children } = props;
   return (
