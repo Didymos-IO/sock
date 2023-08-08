@@ -12,7 +12,7 @@ type AvatarProps = {
 
 export const Avatar = (props: AvatarProps) => {
   const { overrideTalking } = props;
-  const { isSpeaking, isThinking } = useContext(StageContext)!;
+  const { isSpeaking, isThinking, isTTSSpeaking } = useContext(StageContext)!;
   const [areEyesOpen, setAreEyesOpen] = useState(true);
   const [eyeDirection, setEyeDirection] = useState("center");
   const [isMouthOpen, setIsMouthOpen] = useState(false);
@@ -48,21 +48,43 @@ export const Avatar = (props: AvatarProps) => {
 
   const getCurrentImg = (layer: AvatarLayerSettings) => {
     let imgIndex;
-    if (isMouthOpen) {
+    if (isTTSSpeaking && isMouthOpen && !areEyesOpen) {
       imgIndex = 0;
-    } else if (isThinking) {
+    } else if (isTTSSpeaking && !isMouthOpen) {
       imgIndex = 1;
-    } else if (!areEyesOpen) {
+    } else if (isTTSSpeaking) {
       imgIndex = 2;
+      // skipping angry animations right now
+    } else if (isSpeaking && isMouthOpen && !areEyesOpen) {
+      imgIndex = 6;
+    } else if (isSpeaking && !isMouthOpen && !areEyesOpen) {
+      imgIndex = 7;
+    } else if (isMouthOpen) {
+      imgIndex = 8;
+    } else if (isSpeaking && !isMouthOpen) {
+      imgIndex = 9;
+    } else if (isThinking) {
+      imgIndex = 10;
+    } else if (!areEyesOpen) {
+      imgIndex = 11;
     } else if (eyeDirection === "left" && !isSpeaking && !overrideTalking) {
-      imgIndex = 3;
+      imgIndex = 12;
     } else if (eyeDirection === "right" && !isSpeaking && !overrideTalking) {
-      imgIndex = 4;
+      imgIndex = 13;
     } else {
-      imgIndex = 5;
+      imgIndex = 14;
     }
     let imgArray = [
+      layer.ttsBlinking,
+      layer.ttsTalking,
+      layer.ttsDefault,
+      layer.angryBlinking,
+      layer.angryTalking,
+      layer.angryDefault,
+      layer.talkingBlink,
+      layer.talkingBlinkClosed,
       layer.talking,
+      layer.talkingClosedAlt,
       layer.thinking,
       layer.blinking,
       layer.altPose1,

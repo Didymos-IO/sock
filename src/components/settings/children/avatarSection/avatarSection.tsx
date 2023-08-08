@@ -15,6 +15,15 @@ const blankLayer: AvatarLayerSettings = {
   altPose1: "",
   altPose2: "",
   default: "",
+  angryDefault: "",
+  angryBlinking: "",
+  angryTalking: "",
+  talkingClosedAlt: "",
+  talkingBlink: "",
+  talkingBlinkClosed: "",
+  ttsDefault: "",
+  ttsBlinking: "",
+  ttsTalking: "",
 };
 
 export const AvatarSection = () => {
@@ -179,10 +188,131 @@ export const AvatarSection = () => {
                     onChange={handleChangeLayerField}
                   />
                 </div>
+
                 <div className="col-4 mb-3">
-                  <label className="form-label">Talking</label>
+                  <label className="form-label">1. TTS Blinking</label>
                   <p className="tip">
-                    Alternates w/default image when mouth opens while talking.
+                    Triggered when puppet blinks during TTS.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`ttsBlinking_${index}`}
+                    placeholder="eg. tts_blink.png"
+                    value={layer.ttsBlinking}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">2. TTS Talking</label>
+                  <p className="tip">
+                    Alternates w/TTS default image when mouth opens while TTS
+                    talking.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`ttsTalking_${index}`}
+                    placeholder="eg. tts_mouth_open.png"
+                    value={layer.ttsTalking}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">3. TTS Default</label>
+                  <p className="tip">
+                    Default when in TTS speech and mouth not open.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`ttsDefault_${index}`}
+                    placeholder="eg. tts_default.png"
+                    value={layer.ttsDefault}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">4. Angry Blinking</label>
+                  <p className="tip">
+                    Triggered when puppet blinks while angry.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`angryBlinking_${index}`}
+                    placeholder="**This layer coming soon."
+                    value={layer.angryBlinking}
+                    onChange={handleChangeLayerField}
+                    disabled
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">5. Angry Talking</label>
+                  <p className="tip">
+                    Alternates w/angry default image when mouth opens while
+                    angry.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`angryTalking_${index}`}
+                    placeholder="**This layer coming soon."
+                    value={layer.angryTalking}
+                    onChange={handleChangeLayerField}
+                    disabled
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">6. Angry Default</label>
+                  <p className="tip">Default when angry and mouth not open.</p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`angryDefault_${index}`}
+                    placeholder="**This layer coming soon."
+                    value={layer.angryDefault}
+                    onChange={handleChangeLayerField}
+                    disabled
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">
+                    7. Blinking While Talking
+                  </label>
+                  <p className="tip">
+                    Triggered when puppet blinks while mouth is open to talk.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`talkingBlink_${index}`}
+                    placeholder="eg. talking_blink.png"
+                    value={layer.talkingBlink}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">
+                    8. Blinking While Talking Closed
+                  </label>
+                  <p className="tip">
+                    Triggered when puppet blinks while mouth is closed during
+                    talking.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`talkingBlinkClosed_${index}`}
+                    placeholder="eg. talking_blink_closed.png"
+                    value={layer.talkingBlinkClosed}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+                <div className="col-4 mb-3">
+                  <label className="form-label">9. Talking</label>
+                  <p className="tip">
+                    Alternates w/closed image when mouth opens while talking.
                   </p>
                   <input
                     type="text"
@@ -194,7 +324,22 @@ export const AvatarSection = () => {
                   />
                 </div>
                 <div className="col-4 mb-3">
-                  <label className="form-label">Thinking</label>
+                  <label className="form-label">10. Talking Closed</label>
+                  <p className="tip">
+                    Alternates w/open image when mouth closes while talking.
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={`talkingClosedAlt_${index}`}
+                    placeholder="eg. talking_closed.png"
+                    value={layer.talkingClosedAlt}
+                    onChange={handleChangeLayerField}
+                  />
+                </div>
+
+                <div className="col-4 mb-3">
+                  <label className="form-label">11. Thinking</label>
                   <p className="tip">
                     Triggered when puppet is waiting for response from OpenAI
                     API.
@@ -209,7 +354,7 @@ export const AvatarSection = () => {
                   />
                 </div>
                 <div className="col-4 mb-3">
-                  <label className="form-label">Blinking</label>
+                  <label className="form-label">12. Blinking</label>
                   <p className="tip">Triggered when puppet blinks.</p>
                   <input
                     type="text"
@@ -221,7 +366,7 @@ export const AvatarSection = () => {
                   />
                 </div>
                 <div className="col-4 mb-3">
-                  <label className="form-label">Alt Pose 1</label>
+                  <label className="form-label">13. Alt Pose 1</label>
                   <p className="tip">
                     Triggered every so often for a few seconds to
                     shift/twitch/look around.
@@ -236,7 +381,7 @@ export const AvatarSection = () => {
                   />
                 </div>
                 <div className="col-4 mb-3">
-                  <label className="form-label">Alt Pose 2</label>
+                  <label className="form-label">14. Alt Pose 2</label>
                   <p className="tip">
                     Triggered every so often for a few seconds to
                     shift/twitch/look around.
@@ -251,7 +396,7 @@ export const AvatarSection = () => {
                   />
                 </div>
                 <div className="col-4 mb-3">
-                  <label className="form-label">Default (Required)</label>
+                  <label className="form-label">15. Default (Required)</label>
                   <p className="tip">The default to show when not talking.</p>
                   <input
                     type="text"

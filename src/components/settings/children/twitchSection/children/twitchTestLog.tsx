@@ -14,6 +14,7 @@ export const TwitchTestLog = () => {
     disconnect,
     joinChannel,
     setTriggers,
+    setTwitchLog,
   } = useContext(TwitchContext)!;
 
   useEffect(() => {
@@ -27,6 +28,28 @@ export const TwitchTestLog = () => {
         behavior: "smooth",
         block: "end",
       });
+    }
+    // if the latest item in the log has a reward id, add a new item to the log with it.
+    // this is a workaround for the fact that the reward id is not available in the
+
+    const latestLogItem = twitchLog[twitchLog.length - 1];
+    if (latestLogItem?.rewardId) {
+      const newLogItem = {
+        id: "reward-seen-" + latestLogItem.timestamp,
+        command: "",
+        message: `Saw a reward of ${latestLogItem.rewardId}`,
+        rewardId: "",
+        timestamp: latestLogItem.timestamp,
+        userName: "Twitch",
+        userId: "twitch000000",
+        userRoles: {
+          broadcaster: false,
+          mod: false,
+          subscriber: false,
+          vip: false,
+        },
+      };
+      setTwitchLog((prev: any) => [...prev, newLogItem]);
     }
   }, [twitchLog]);
 
@@ -50,6 +73,8 @@ export const TwitchTestLog = () => {
       joinChannel(twitch.channel);
     }
   };
+
+  console.log("twitchLog:", twitchLog);
 
   return (
     <>
