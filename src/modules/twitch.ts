@@ -185,7 +185,6 @@ const _hasCooldownExpired = (
   const mostRecentTriggerLogItem = triggerLog.find(
     (item) => item.triggerId === trigger.id
   );
-  console.log("most recent matching item", mostRecentTriggerLogItem);
   if (mostRecentTriggerLogItem) {
     const mostRecentTriggerLogItemTimestamp = new Date(
       mostRecentTriggerLogItem.timestamp

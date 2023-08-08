@@ -28,6 +28,7 @@ export const Stage = () => {
     joinChannel,
   } = twitchContext;
   const profiles = settings.profiles;
+  const triggers = profiles[index].twitch.triggers;
   const { identity, openAiApi, tts } = profiles[index];
   let recordingTimer: any;
 
@@ -59,14 +60,14 @@ export const Stage = () => {
   }, [context.newestBlob]);
 
   useEffect(() => {
-    setTriggers(settings.profiles[index].twitch.triggers);
-  }, [settings.profiles[index].twitch.triggers]);
+    setTriggers(triggers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [triggers]);
 
   useEffect(() => {
     // get the latest trigger log
     if (triggerLog.length > 0) {
       const latest = triggerLog[triggerLog.length - 1];
-      const triggers = settings.profiles[index].twitch.triggers;
       // get the matching twitchLog entry based on the id that matches the trigger log's messageId
       const message = twitchLog.find((log) => log.id === latest.messageId);
       const trigger = triggers.find(
@@ -85,6 +86,14 @@ export const Stage = () => {
             break;
           case "response":
             thinkUpResponse(`${message.userName} says, '${message.message}'`);
+            break;
+          case "say":
+            const sayMessage = {
+              content: trigger.text,
+              role: "assistant",
+            };
+            context.setChatHistory([...context.chatHistory, sayMessage]);
+            talk(sayMessage);
             break;
         }
       }

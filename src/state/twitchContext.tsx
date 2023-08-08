@@ -50,7 +50,6 @@ export const TwitchProvider = (props: TwitchProviderProps) => {
     let response: TriggerCheckResponse = {
       isTriggered: false,
     };
-    console.log("triggers", triggers);
     triggers.forEach((trigger) => {
       if (wasTriggered) return;
       if (!trigger.isActive || message.userName === "Twitch") return;
@@ -67,7 +66,6 @@ export const TwitchProvider = (props: TwitchProviderProps) => {
           wasTriggered = response.isTriggered;
           break;
         case "command":
-          console.log("got here", message, trigger);
           const commandResponse = Twitch.checkForCommandTrigger(
             message,
             trigger,
@@ -77,7 +75,6 @@ export const TwitchProvider = (props: TwitchProviderProps) => {
             response = commandResponse;
           }
           wasTriggered = response.isTriggered;
-          console.log("was triggered?", wasTriggered);
           break;
       }
     });
