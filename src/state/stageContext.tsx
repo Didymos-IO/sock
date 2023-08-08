@@ -21,6 +21,7 @@ export const StageProvider = (props: StageProviderProps) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSpeechSynthesisActive, setIsSpeechSynthesisActive] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
+  const [isTTSSpeaking, setIsTTSSpeaking] = useState(false);
   const [isTwitchActive, setIsTwitchActive] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [location, setLocation] = useState("");
@@ -46,7 +47,6 @@ export const StageProvider = (props: StageProviderProps) => {
       isRecording,
       setIsRecording,
       isSpeaking,
-      isTwitchActive,
       setIsSpeaking,
       isSpeechSynthesisActive,
       setIsSpeechSynthesisActive,
@@ -54,6 +54,9 @@ export const StageProvider = (props: StageProviderProps) => {
       setIsThinking,
       isTranscribing,
       setIsTranscribing,
+      isTTSSpeaking,
+      setIsTTSSpeaking,
+      isTwitchActive,
       setIsTwitchActive,
       location,
       setLocation,
@@ -84,6 +87,7 @@ export const StageProvider = (props: StageProviderProps) => {
     isSpeechSynthesisActive,
     isThinking,
     isTranscribing,
+    isTTSSpeaking,
     isTwitchActive,
     location,
     newestBlob,

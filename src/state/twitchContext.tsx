@@ -142,6 +142,7 @@ export const TwitchProvider = (props: TwitchProviderProps) => {
       disconnect,
       joinChannel,
       setTriggers,
+      setTwitchLog,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel, isTwitchConnected, triggerLog, triggers, twitchLog]);

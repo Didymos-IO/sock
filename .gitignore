@@ -42,3 +42,4 @@ next-env.d.ts
 /.vscode
 *.cmd
 backend/speech_outputs/initial_tts.wav
+/public/avatars/riot/

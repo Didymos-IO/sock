@@ -38,6 +38,8 @@ export type StageContextType = {
   setIsThinking: React.Dispatch<React.SetStateAction<boolean>>;
   isTranscribing: boolean;
   setIsTranscribing: React.Dispatch<React.SetStateAction<boolean>>;
+  isTTSSpeaking: boolean;
+  setIsTTSSpeaking: React.Dispatch<React.SetStateAction<boolean>>;
   isTwitchActive: boolean;
   setIsTwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
   location: string;
@@ -69,6 +71,7 @@ export type TwitchContextType = {
   disconnect: () => void;
   joinChannel: (channel: string) => void;
   setTriggers: React.Dispatch<React.SetStateAction<TwitchTrigger[]>>;
+  setTwitchLog: React.Dispatch<React.SetStateAction<TwitchChatMessage[]>>;
 };
 
 export type Settings = {
@@ -134,6 +137,15 @@ export type AvatarLayerSettings = {
   altPose1: string;
   altPose2: string;
   default: string;
+  angryDefault: string;
+  angryBlinking: string;
+  angryTalking: string;
+  talkingClosedAlt: string;
+  talkingBlink: string;
+  talkingBlinkClosed: string;
+  ttsDefault: string;
+  ttsBlinking: string;
+  ttsTalking: string;
 };
 
 export type TwitchSettings = {

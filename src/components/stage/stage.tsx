@@ -79,8 +79,9 @@ export const Stage = () => {
               content: message.message,
               role: "assistant",
             };
-            talk(ttsMessage);
+            context.setIsTTSSpeaking(true);
             context.setChatHistory([...context.chatHistory, ttsMessage]);
+            talk(ttsMessage);
             break;
           case "response":
             thinkUpResponse(`${message.userName} says, '${message.message}'`);
@@ -188,6 +189,7 @@ export const Stage = () => {
     });
     context.setTtsTime(time);
     context.setIsSpeaking(false);
+    context.setIsTTSSpeaking(false);
   };
 
   const thinkUpResponse = async (text: string) => {

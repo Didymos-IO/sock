@@ -5,15 +5,20 @@
                 "bgColor": "00FF00",
                 "layers": [
                     {
-                        "altPose1": "lookleft.png",
-                        "altPose2": "lookright.png",
+                        "altPose1": "",
+                        "altPose2": "",
                         "blinking": "blink.png",
                         "default": "default.png",
                         "id": 0,
                         "name": "Data Avatar",
-                        "path": "avatars/chuck/",
+                        "path": "avatars/riot/",
                         "talking": "talk.png",
-                        "thinking": "think.png"
+                        "talkingBlink": "talk_blink_open.png",
+                        "talkingBlinkClosed": "talk_blink_closed.png",
+                        "talkingClosedAlt": "talk_closed.png",
+                        "thinking": "think.png",
+                        "ttsBlinking": "tts_blink.png",
+                        "ttsDefault": "tts_default.png"
                     }
                 ]
             },
@@ -58,9 +63,9 @@
                 "channel": "wyspering",
                 "triggers": [
                     {
-                        "action": "tts",
-                        "command": "!riot",
-                        "cooldown": 10,
+                        "action": "response",
+                        "command": "d7e16f76-14f9-4d18-82be-a67d10d3aa8c",
+                        "cooldown": 0,
                         "description": "Talk to Riot",
                         "id": 1691192084559,
                         "isActive": true,
@@ -68,12 +73,12 @@
                         "rewardId": "",
                         "role": "everyone",
                         "text": "",
-                        "type": "command",
+                        "type": "reward",
                         "user": "timor_jack"
                     },
                     {
-                        "action": "response",
-                        "command": "d7e16f76-14f9-4d18-82be-a67d10d3aa8c",
+                        "action": "tts",
+                        "command": "a069f606-85a8-4589-b4e5-a0c6c775d649",
                         "cooldown": 0,
                         "description": "Conversation Reward",
                         "id": 1691465769212,
