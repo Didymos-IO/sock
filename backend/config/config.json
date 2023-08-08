@@ -1,55 +1,92 @@
 {
-    "avatar": {
-        "bgColor": "00FF00",
-        "layers": [
-            {
-                "altPose1": "lookleft.png",
-                "altPose2": "lookright.png",
-                "blinking": "blink.png",
-                "default": "default.png",
-                "id": 0,
-                "name": "Data Avatar",
-                "path": "avatars/chuck/",
-                "talking": "talk.png",
-                "thinking": "think.png"
+    "profiles": [
+        {
+            "avatar": {
+                "bgColor": "00FF00",
+                "layers": [
+                    {
+                        "altPose1": "lookleft.png",
+                        "altPose2": "lookright.png",
+                        "blinking": "blink.png",
+                        "default": "default.png",
+                        "id": 0,
+                        "name": "Data Avatar",
+                        "path": "avatars/chuck/",
+                        "talking": "talk.png",
+                        "thinking": "think.png"
+                    }
+                ]
+            },
+            "identity": {
+                "attentionWords": [
+                    "chuck",
+                    " zelda",
+                    " avocado"
+                ],
+                "chattiness": 8.7,
+                "memory": 750,
+                "name": "Chuck",
+                "nameHomonyms": [
+                    "chuck",
+                    " ciao",
+                    " chock"
+                ],
+                "personality": "You are Chuck, a quirky man who lives in western Washington in the Pacific Northwest, and are a co-host on a podcast. You have a good sense of humor and like to be zany and funny all the time. You like video games, especially the Legend of Zelda, love living in the Pacific Northwest, have too many baseball caps, and enjoy board games and doing yard work. You only ever speak in two sentences or less. You need to pay attention to what others are saying to you, however, and respond to what they're talking about. Be humorous and relaxed at all times. You never ask for more context or clarification, and you never say you don't understand. If you don't understand, instead say something silly and inane without apologizing. You never say you're sorry."
+            },
+            "openAiApi": {
+                "frequencyPenalty": 1,
+                "maxTokens": 2048,
+                "presencePenalty": 1,
+                "temperature": 1
+            },
+            "saveFileVersion": "1.0.0",
+            "tts": {
+                "engine": "WebSpeech",
+                "optionsCoquiAi": {
+                    "emotion": "Dull",
+                    "model": "tts_models/en/vctk/vits",
+                    "rate": 1,
+                    "voice": "p233"
+                },
+                "optionsWebSpeech": {
+                    "pitch": 1,
+                    "rate": 1,
+                    "voice": 0
+                }
+            },
+            "twitch": {
+                "channel": "wyspering",
+                "triggers": [
+                    {
+                        "action": "tts",
+                        "command": "!riot",
+                        "cooldown": 10,
+                        "description": "Talk to Riot",
+                        "id": 1691192084559,
+                        "isActive": true,
+                        "isBoundToRole": true,
+                        "rewardId": "",
+                        "role": "everyone",
+                        "text": "",
+                        "type": "command",
+                        "user": "timor_jack"
+                    },
+                    {
+                        "action": "response",
+                        "command": "d7e16f76-14f9-4d18-82be-a67d10d3aa8c",
+                        "cooldown": 0,
+                        "description": "Conversation Reward",
+                        "id": 1691465769212,
+                        "isActive": true,
+                        "isBoundToRole": true,
+                        "rewardId": "",
+                        "role": "everyone",
+                        "text": "",
+                        "type": "reward",
+                        "user": ""
+                    }
+                ]
             }
-        ]
-    },
-    "identity": {
-        "attentionWords": [
-            "chuck",
-            " zelda",
-            " avocado"
-        ],
-        "chattiness": 8.7,
-        "memory": 750,
-        "name": "Chuck",
-        "nameHomonyms": [
-            "chuck",
-            " ciao",
-            " chock"
-        ],
-        "personality": "You are Chuck, a quirky man who lives in western Washington in the Pacific Northwest, and are a co-host on a podcast. You have a good sense of humor and like to be zany and funny all the time. You like video games, especially the Legend of Zela, love living in the Pacific Northwest, have too many baseball caps, and enjoy board games and doing yard work. You only ever speak in two sentences or less. You need to pay attention to what others are saying to you, however, and respond to what they're talking about. Be humorous and relaxed at all times. You never ask for more context or clarification, and you never say you don't understand. If you don't understand, instead say something silly and inane without apologizing. You never say you're sorry."
-    },
-    "openAiApi": {
-        "frequencyPenalty": 1,
-        "maxTokens": 2048,
-        "presencePenalty": 1,
-        "temperature": 1
-    },
-    "saveFileVersion": "1.0.0",
-    "tts": {
-        "engine": "WebSpeech",
-        "optionsCoquiAi": {
-            "emotion": "Dull",
-            "model": "tts_models/en/vctk/vits",
-            "rate": 1,
-            "voice": "p233"
-        },
-        "optionsWebSpeech": {
-            "pitch": 1,
-            "rate": 1,
-            "voice": 0
         }
-    }
+    ]
 }

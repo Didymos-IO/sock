@@ -6,7 +6,7 @@ type SettingsProviderProps = {
   children: React.ReactNode;
 };
 
-const initialSettings: Settings = {
+const blankProfile = {
   saveFileVersion: "1.0.0",
   identity: {
     name: "",
@@ -36,6 +36,10 @@ const initialSettings: Settings = {
       emotion: "Neutral",
     },
   },
+  twitch: {
+    channel: "",
+    triggers: [],
+  },
   avatar: {
     bgColor: "00FF00",
     layers: [
@@ -54,13 +58,44 @@ const initialSettings: Settings = {
   },
 };
 
+const initialSettings: Settings = {
+  profiles: [{ ...blankProfile }],
+};
+
 export const SettingsContext = createContext<SettingsContextType | undefined>(
   undefined
 );
 
 export const SettingsProvider = (props: SettingsProviderProps) => {
+  const [activeTab, setActiveTab] = useState("identity");
+  const [index, setIndex] = useState(0);
   const [isDirty, setIsDirty] = useState(false);
   const [settings, setSettings] = useState<Settings>(initialSettings);
+
+  const addProfile = () => {
+    const newSettings: Settings = { ...settings };
+    newSettings.profiles.push({ ...blankProfile });
+    setSettings(newSettings);
+    setIndex(newSettings.profiles.length - 1);
+    setIsDirty(true);
+  };
+
+  const changeIndex = (index: number) => {
+    setIndex(index);
+  };
+
+  const deleteCurrentProfile = () => {
+    const newSettings: Settings = { ...settings };
+    newSettings.profiles.splice(index, 1);
+    setSettings(newSettings);
+    setIndex(0);
+    setIsDirty(true);
+  };
+
+  const getCurrentProfile = () => {
+    const newSettings: Settings = { ...settings };
+    return newSettings.profiles[index];
+  };
 
   const loadSettings = async () => {
     const response = await api.loadConfig();
@@ -74,49 +109,67 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
   };
 
   const setField = (section: string, field: string, value: any) => {
-    const newSettings: any = { ...settings };
-    newSettings[section][field] = value;
-    setSettings(newSettings);
-    setIsDirty(true);
+    let profile: any = getCurrentProfile();
+    profile[section][field] = value;
+    updateCurrentProfile(profile);
   };
 
   const setLayerField = (layer: number, field: string, value: any) => {
-    const newSettings: any = { ...settings };
-    let layers = [...newSettings.avatar.layers];
+    let profile: any = getCurrentProfile();
+    let layers = [...profile.avatar.layers];
     layers[layer][field] = value;
-    newSettings.avatar.layers = layers;
-    setSettings(newSettings);
-    setIsDirty(true);
+    profile.avatar.layers = layers;
+    updateCurrentProfile(profile);
+  };
+
+  const setTriggerField = (trigger: number, field: string, value: any) => {
+    let profile: any = getCurrentProfile();
+    let triggers = [...profile.twitch.triggers];
+    triggers[trigger][field] = value;
+    profile.twitch.triggers = triggers;
+    updateCurrentProfile(profile);
   };
 
   const setCoquiAiOptionField = (field: string, value: any) => {
-    const newSettings: any = { ...settings };
-    newSettings.tts.optionsCoquiAi[field] = value;
-    setSettings(newSettings);
-    setIsDirty(true);
+    let profile: any = getCurrentProfile();
+    profile.tts.optionsCoquiAi[field] = value;
+    updateCurrentProfile(profile);
   };
 
   const setWsOptionField = (field: string, value: any) => {
+    let profile: any = getCurrentProfile();
+    profile.tts.optionsWebSpeech[field] = value;
+    updateCurrentProfile(profile);
+  };
+
+  const updateCurrentProfile = (newProfile: any) => {
     const newSettings: any = { ...settings };
-    newSettings.tts.optionsWebSpeech[field] = value;
+    newSettings.profiles[index] = newProfile;
     setSettings(newSettings);
     setIsDirty(true);
   };
 
   const context = useMemo(() => {
     return {
+      activeTab,
+      addProfile,
+      changeIndex,
+      deleteCurrentProfile,
       isDirty,
+      index,
       loadSettings,
       saveSettings,
       settings,
+      setActiveTab,
       setField,
       setIsDirty,
       setLayerField,
+      setTriggerField,
       setCoquiAiOptionField,
       setWsOptionField,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDirty, settings]);
+  }, [activeTab, index, isDirty, settings]);
 
   const { children } = props;
   return (

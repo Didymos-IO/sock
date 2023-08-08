@@ -1,4 +1,4 @@
-import { Settings } from "@/types";
+import { Settings, SettingsProfile } from "@/types";
 
 export const loadConfig = async (): Promise<Settings> => {
   const response = await fetch("http://127.0.0.1:8000/load_config", {
@@ -8,5 +8,5 @@ export const loadConfig = async (): Promise<Settings> => {
     },
   });
   const data = await response.json();
-  return data.config;
+  return { profiles: data.config.profiles as SettingsProfile[] };
 };

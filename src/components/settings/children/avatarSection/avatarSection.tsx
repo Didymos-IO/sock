@@ -3,8 +3,9 @@ import { ChangeEvent, useContext, useState } from "react";
 import { Icons } from "@/components";
 import { Avatar } from "@/components/stage/children";
 import { SettingsContext } from "@/state";
+import { AvatarLayerSettings } from "@/types";
 
-const blankLayer = {
+const blankLayer: AvatarLayerSettings = {
   id: 0,
   name: "",
   path: "",
@@ -18,8 +19,9 @@ const blankLayer = {
 
 export const AvatarSection = () => {
   const context = useContext(SettingsContext)!;
-  const { settings, setField, setLayerField } = context;
-  const { avatar } = settings;
+  const { index, settings, setField, setLayerField } = context;
+  const { profiles } = settings;
+  const avatar = profiles[index].avatar;
   const { layers } = avatar;
   const [previewMode, setPreviewMode] = useState("0");
 
@@ -133,6 +135,7 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "up")}
+                    disabled={index === 0 || layers.length === 1}
                   >
                     <Icons.ArrowBarUp />
                   </button>
@@ -140,6 +143,9 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "down")}
+                    disabled={
+                      index === layers.length - 1 || layers.length === 1
+                    }
                   >
                     <Icons.ArrowBarDown />
                   </button>
@@ -278,6 +284,15 @@ export const AvatarSection = () => {
             className="btn btn-primary bg-gradient"
             onClick={handleAddLayerClick}
           >
+            <span
+              style={{
+                marginTop: "-7px",
+                display: "inline-block",
+                verticalAlign: "middle",
+              }}
+            >
+              <Icons.PlusCircle />
+            </span>{" "}
             Add New Layer
           </button>
         </div>

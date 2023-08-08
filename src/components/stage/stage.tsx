@@ -3,8 +3,7 @@ import { useContext, useEffect } from "react";
 import { ReactMic } from "react-mic";
 
 import { ChatMessage, Brain, Ears, Mouth, Personality } from "@/modules";
-import { SettingsContext, StageContext } from "@/state";
-import { Settings } from "@/types";
+import { SettingsContext, StageContext, TwitchContext } from "@/state";
 
 import {
   Avatar,
@@ -17,19 +16,29 @@ import {
 export const Stage = () => {
   const context = useContext(StageContext)!;
   const settingsContext = useContext(SettingsContext)!;
+  const twitchContext = useContext(TwitchContext)!;
+  const { index, loadSettings, settings } = settingsContext;
   const {
-    loadSettings,
-    settings: { identity, openAiApi, tts },
-  } = settingsContext;
+    channel,
+    disconnect,
+    isTwitchConnected,
+    setTriggers,
+    triggerLog,
+    twitchLog,
+    joinChannel,
+  } = twitchContext;
+  const profiles = settings.profiles;
+  const { identity, openAiApi, tts } = profiles[index];
   let recordingTimer: any;
 
   useEffect(() => {
     loadSettings()
-      .then((settings: Settings) => {
+      .then(() => {
         const wordsBeforeNext = Personality.wordsBeforeSpeakingNext(
-          settings.identity.chattiness
+          identity.chattiness
         );
         context.setWordCountBeforeResponse(wordsBeforeNext);
+        testTwitch();
       })
       .catch((error) => {
         console.log(error);
@@ -48,6 +57,39 @@ export const Stage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.newestBlob]);
+
+  useEffect(() => {
+    setTriggers(settings.profiles[index].twitch.triggers);
+  }, [settings.profiles[index].twitch.triggers]);
+
+  useEffect(() => {
+    // get the latest trigger log
+    if (triggerLog.length > 0) {
+      const latest = triggerLog[triggerLog.length - 1];
+      const triggers = settings.profiles[index].twitch.triggers;
+      // get the matching twitchLog entry based on the id that matches the trigger log's messageId
+      const message = twitchLog.find((log) => log.id === latest.messageId);
+      const trigger = triggers.find(
+        (trigger) => trigger.id === latest.triggerId
+      );
+      if (message && trigger) {
+        switch (trigger.action) {
+          case "tts":
+            const ttsMessage = {
+              content: message.message,
+              role: "assistant",
+            };
+            talk(ttsMessage);
+            context.setChatHistory([...context.chatHistory, ttsMessage]);
+            break;
+          case "response":
+            thinkUpResponse(`${message.userName} says, '${message.message}'`);
+            break;
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [triggerLog]);
 
   const handleActivateClick = () => {
     if (!context.isActive) {
@@ -113,6 +155,23 @@ export const Stage = () => {
     context.setIsSpeechSynthesisActive(!context.isSpeechSynthesisActive);
   };
 
+  const handleToggleTwitchClick = () => {
+    const twitchSettings = settings.profiles[index].twitch;
+    if (twitchSettings.channel) {
+      if (!context.isTwitchActive) {
+        console.log(twitchSettings.triggers);
+        joinChannel(twitchSettings.channel);
+      } else {
+        disconnect();
+      }
+      context.setIsTwitchActive(!context.isTwitchActive);
+    } else {
+      window.alert(
+        "You need to set up a Twitch channel in settings before you can activate Twitch mode."
+      );
+    }
+  };
+
   const startRecordingTimer = () => {
     recordingTimer = setTimeout(() => {
       context.setIsRecording(false);
@@ -172,6 +231,10 @@ export const Stage = () => {
     );
   };
 
+  const testTwitch = () => {
+    // joinChannel("timor_jack");
+  };
+
   return (
     <div className="container-xxl py-4 bd-gray-800 avatar-container">
       <div className="mic-wrapper">
@@ -196,6 +259,7 @@ export const Stage = () => {
               onActivateClick={handleActivateClick}
               onToggleSpeechSynthesisClick={handleToggleSpeechSynthesisClick}
               onToggleTranscriptionClick={handleRecordClick}
+              onToggleTwitchClick={handleToggleTwitchClick}
             />
             <Status />
           </div>

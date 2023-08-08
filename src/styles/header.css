@@ -5,3 +5,11 @@
 .sock-headline {
   line-height: 2rem;
 }
+
+.unstyled {
+  color: white;
+}
+
+.unstyle * {
+  pointer-events: none;
+}
