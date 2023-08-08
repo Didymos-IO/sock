@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Header, Settings, Stage } from "@/components";
 import { Helpers } from "@/modules";
-import { SettingsProvider, StageProvider } from "@/state";
+import { SettingsProvider, StageProvider, TwitchProvider } from "@/state";
 
 export default function Core() {
   const [tab, setTab] = useState("identity");
@@ -35,13 +35,15 @@ export default function Core() {
   return (
     <>
       <SettingsProvider>
-        <StageProvider>
-          <Header location={location} onSetLocation={handleSetLocation} />
-          {location === "settings" && (
-            <Settings onChangeTab={handleChangeTab} />
-          )}
-          {location === "stage" && <Stage />}
-        </StageProvider>
+        <TwitchProvider>
+          <StageProvider>
+            <Header location={location} onSetLocation={handleSetLocation} />
+            {location === "settings" && (
+              <Settings onChangeTab={handleChangeTab} />
+            )}
+            {location === "stage" && <Stage />}
+          </StageProvider>
+        </TwitchProvider>
       </SettingsProvider>
     </>
   );

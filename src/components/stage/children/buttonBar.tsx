@@ -7,6 +7,7 @@ type ButtonBarProps = {
   onActivateClick: () => void;
   onToggleSpeechSynthesisClick: () => void;
   onToggleTranscriptionClick: () => void;
+  onToggleTwitchClick: () => void;
 };
 
 export const ButtonBar = (props: ButtonBarProps) => {
@@ -14,10 +15,12 @@ export const ButtonBar = (props: ButtonBarProps) => {
     onActivateClick,
     onToggleSpeechSynthesisClick,
     onToggleTranscriptionClick,
+    onToggleTwitchClick,
   } = props;
   const {
     isActive,
     isSpeechSynthesisActive,
+    isTwitchActive,
     haveRequestedStop,
     onlyRespondWhenSpokenTo,
     setOnlyRespondWhenSpokenTo,
@@ -44,7 +47,9 @@ export const ButtonBar = (props: ButtonBarProps) => {
       </div>
       <div>
         <button
-          className="btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2"
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+            isTranscriptionActive ? "" : "text-dark"
+          }`}
           title={
             isTranscriptionActive
               ? "Turn off transcription"
@@ -56,7 +61,9 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Ear isActive={isTranscriptionActive} />
         </button>
         <button
-          className="btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2"
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+            isSpeechSynthesisActive ? "" : "text-dark"
+          }`}
           onClick={onToggleSpeechSynthesisClick}
           title={
             isSpeechSynthesisActive
@@ -68,7 +75,7 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Speaker isActive={isSpeechSynthesisActive} />
         </button>
         <button
-          className="btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2"
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 text-dark`}
           title="Log speech to chat"
           disabled={true}
         >
@@ -82,14 +89,21 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.ChatLeftQuote />
         </button>*/}
         <button
-          className="btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2"
-          title="Do not speak to chat"
-          disabled={true}
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+            isTwitchActive ? "" : "text-dark"
+          }`}
+          title={
+            isTwitchActive ? "Disconnect from Twitch" : "Connect to Twitch"
+          }
+          disabled={!isActive}
+          onClick={onToggleTwitchClick}
         >
-          <Icons.ChatLeftText />
+          <Icons.Twitch />
         </button>
         <button
-          className="btn btn-primary d-inline-block bg-gradient custom-shadow-sm px-2"
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm px-2 ${
+            onlyRespondWhenSpokenTo ? "" : "text-dark"
+          }`}
           title={
             onlyRespondWhenSpokenTo
               ? "Speak when a number of words are spoken."

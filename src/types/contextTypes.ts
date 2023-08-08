@@ -38,6 +38,8 @@ export type StageContextType = {
   setIsThinking: React.Dispatch<React.SetStateAction<boolean>>;
   isTranscribing: boolean;
   setIsTranscribing: React.Dispatch<React.SetStateAction<boolean>>;
+  isTwitchActive: boolean;
+  setIsTwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
   location: string;
   setLocation: React.Dispatch<React.SetStateAction<string>>;
   newestBlob: Blob | undefined;
@@ -56,6 +58,17 @@ export type StageContextType = {
   setTtsTime: React.Dispatch<React.SetStateAction<string>>;
   wordCountBeforeResponse: number;
   setWordCountBeforeResponse: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export type TwitchContextType = {
+  channel: string;
+  isTwitchConnected: boolean;
+  triggerLog: TwitchTriggerEvent[];
+  triggers: TwitchTrigger[];
+  twitchLog: TwitchChatMessage[];
+  disconnect: () => void;
+  joinChannel: (channel: string) => void;
+  setTriggers: React.Dispatch<React.SetStateAction<TwitchTrigger[]>>;
 };
 
 export type Settings = {
@@ -134,9 +147,42 @@ export type TwitchTrigger = {
   type: "command" | "reward" | "wordcount" | "attention";
   command: string;
   rewardId: string;
+  isBoundToRole: boolean;
   role: "broadcaster" | "mod" | "vip" | "everyone" | "subscriber";
+  user: string;
   action: "tts" | "response" | "say";
   text: string;
   isActive: boolean;
   cooldown: number;
+};
+
+export type TwitchChatMessage = {
+  id: string;
+  command: string;
+  message: string;
+  rewardId: string;
+  timestamp: string;
+  userName: string;
+  userId: string;
+  userRoles: TwitchUserRoles;
+};
+
+export type TwitchTriggerEvent = {
+  id: string;
+  messageId: string;
+  triggerId: number;
+  timestamp: string;
+};
+
+export type TwitchUserRoles = {
+  broadcaster: boolean;
+  mod: boolean;
+  subscriber: boolean;
+  vip: boolean;
+};
+
+export type TriggerCheckResponse = {
+  isTriggered: boolean;
+  triggerLogItem?: TwitchTriggerEvent;
+  messageLogItem?: TwitchChatMessage;
 };

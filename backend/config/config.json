@@ -31,7 +31,7 @@
                     " ciao",
                     " chock"
                 ],
-                "personality": "You are Chuck, a quirky man who lives in western Washington in the Pacific Northwest, and are a co-host on a podcast. You have a good sense of humor and like to be zany and funny all the time. You like video games, especially the Legend of Zela, love living in the Pacific Northwest, have too many baseball caps, and enjoy board games and doing yard work. You only ever speak in two sentences or less. You need to pay attention to what others are saying to you, however, and respond to what they're talking about. Be humorous and relaxed at all times. You never ask for more context or clarification, and you never say you don't understand. If you don't understand, instead say something silly and inane without apologizing. You never say you're sorry."
+                "personality": "You are Chuck, a quirky man who lives in western Washington in the Pacific Northwest, and are a co-host on a podcast. You have a good sense of humor and like to be zany and funny all the time. You like video games, especially the Legend of Zelda, love living in the Pacific Northwest, have too many baseball caps, and enjoy board games and doing yard work. You only ever speak in two sentences or less. You need to pay attention to what others are saying to you, however, and respond to what they're talking about. Be humorous and relaxed at all times. You never ask for more context or clarification, and you never say you don't understand. If you don't understand, instead say something silly and inane without apologizing. You never say you're sorry."
             },
             "openAiApi": {
                 "frequencyPenalty": 1,
@@ -55,8 +55,37 @@
                 }
             },
             "twitch": {
-                "channel": "",
-                "triggers": []
+                "channel": "wyspering",
+                "triggers": [
+                    {
+                        "action": "tts",
+                        "command": "!riot",
+                        "cooldown": 10,
+                        "description": "Talk to Riot",
+                        "id": 1691192084559,
+                        "isActive": true,
+                        "isBoundToRole": true,
+                        "rewardId": "",
+                        "role": "everyone",
+                        "text": "",
+                        "type": "command",
+                        "user": "timor_jack"
+                    },
+                    {
+                        "action": "response",
+                        "command": "d7e16f76-14f9-4d18-82be-a67d10d3aa8c",
+                        "cooldown": 0,
+                        "description": "Conversation Reward",
+                        "id": 1691465769212,
+                        "isActive": true,
+                        "isBoundToRole": true,
+                        "rewardId": "",
+                        "role": "everyone",
+                        "text": "",
+                        "type": "reward",
+                        "user": ""
+                    }
+                ]
             }
         }
     ]

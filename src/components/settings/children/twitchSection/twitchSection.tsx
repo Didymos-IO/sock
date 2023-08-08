@@ -4,15 +4,19 @@ import { Icons } from "@/components";
 import { SettingsContext } from "@/state";
 import { TwitchTrigger } from "@/types";
 
+import { ActionInfo, TwitchTestLog } from "./children";
+
 const blankTrigger: TwitchTrigger = {
   id: 0,
   description: "",
   type: "command",
   command: "",
   rewardId: "",
+  isBoundToRole: true,
   role: "everyone",
   action: "tts",
   text: "",
+  user: "",
   isActive: false,
   cooldown: 0,
 };
@@ -69,6 +73,12 @@ export const TwitchSection = () => {
     setField("twitch", "triggers", [...triggers, newTrigger]);
   };
 
+  const handleChangeField = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setField("twitch", e.target.name, e.target.value);
+  };
+
   const handleDeleteTrigger = (id: number | string) => {
     if (
       window.confirm(
@@ -80,7 +90,22 @@ export const TwitchSection = () => {
     }
   };
 
-  const handleMoveLayer = (layerId: number, direction: "up" | "down") => {};
+  const handleMoveTrigger = (triggerId: number, direction: "up" | "down") => {
+    const newTriggers = [...triggers];
+    const index = newTriggers.findIndex((item) => item.id === triggerId);
+    if (index === -1) {
+      return newTriggers; // No changes needed
+    }
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= newTriggers.length) {
+      return newTriggers; // No changes needed
+    }
+    const updatedArray = [...newTriggers];
+    const itemToMove = updatedArray[index];
+    updatedArray[index] = updatedArray[newIndex];
+    updatedArray[newIndex] = itemToMove;
+    setField("twitch", "triggers", updatedArray);
+  };
 
   return (
     <fieldset>
@@ -92,14 +117,19 @@ export const TwitchSection = () => {
           <input
             type="text"
             className="form-control"
+            name="channel"
             placeholder="e.g. ironmouse"
+            onChange={handleChangeField}
+            value={twitch.channel}
           />
         </div>
-        <div className="col-9 mb-3"></div>
+        <div className="col-9 mb-3">
+          <TwitchTestLog />
+        </div>
         <div className="col-12 mb-3">
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary bg-gradient"
             onClick={handleAddTriggerClick}
           >
             <span
@@ -122,24 +152,31 @@ export const TwitchSection = () => {
                   <button
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
-                    onClick={() => handleMoveLayer(trigger.id, "up")}
+                    onClick={() => handleMoveTrigger(trigger.id, "up")}
+                    disabled={triggerIndex === 0 || triggers.length === 1}
                   >
                     <Icons.ArrowBarUp />
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
-                    onClick={() => handleMoveLayer(trigger.id, "down")}
+                    onClick={() => handleMoveTrigger(trigger.id, "down")}
+                    disabled={
+                      triggerIndex === triggers.length - 1 ||
+                      triggers.length === 1
+                    }
                   >
                     <Icons.ArrowBarDown />
                   </button>
-                  {trigger.id}
+                </div>
+                <div className="col-2 mb-3">
+                  <label className="form-label">ID</label>
+                  <p className="tip">The ID of this trigger.</p>
+                  <div className="pt-2">{trigger.id}</div>
                 </div>
                 <div className="col-3 mb-3">
                   <label className="form-label">Description</label>
-                  <p className="tip">
-                    A description or label for what this trigger does.
-                  </p>
+                  <p className="tip">A description / label for this trigger.</p>
                   <input
                     type="text"
                     className="form-control"
@@ -154,7 +191,7 @@ export const TwitchSection = () => {
                     }}
                   />
                 </div>
-                <div className="col-3 mb-3">
+                <div className="col-2 mb-3">
                   <label className="form-label">Is Active?</label>
                   <p className="tip">Whether or not this trigger is active.</p>
                   <div className="pt-2">
@@ -178,14 +215,12 @@ export const TwitchSection = () => {
                     <span>Active</span>
                   </div>
                 </div>
-                <div className="col-3 mb-3">
+                <div className="col-2 mb-3">
                   <label className="form-label">Cooldown</label>
-                  <p className="tip">
-                    The cooldown in seconds before allowed again.
-                  </p>
+                  <p className="tip">Cooldown before allowed again.</p>
                   <input
                     type="number"
-                    className="form-control"
+                    className="form-control d-inline-block w-50 me-3 text-end"
                     placeholder="e.g. 30"
                     value={trigger.cooldown}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -196,6 +231,7 @@ export const TwitchSection = () => {
                       );
                     }}
                   />
+                  Secs
                 </div>
                 <div className="col-1 mb-3 text-end">
                   <button
@@ -208,7 +244,7 @@ export const TwitchSection = () => {
                     <Icons.Trash />
                   </button>
                 </div>
-                <div className="col-3 mb-3">
+                <div className="col-2 mb-3">
                   <label className="form-label">Type</label>
                   <p className="tip">The type of trigger.</p>
                   <select
@@ -220,29 +256,72 @@ export const TwitchSection = () => {
                   >
                     <option value="command">Command</option>
                     <option value="reward">Reward</option>
-                    <option value="wordcount">Word Count</option>
-                    <option value="attention">Attention</option>
+                    <option value="wordcount" disabled>
+                      Word Count
+                    </option>
+                    <option value="attention" disabled>
+                      Attention
+                    </option>
                   </select>
                 </div>
-                <div className="col-3 mb-3">
-                  <label className="form-label">Role</label>
-                  <p className="tip">
-                    The minimum role required to use this trigger.
-                  </p>
-                  <select
-                    className="form-select"
-                    value={trigger.role}
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      setTriggerField(triggerIndex, "role", e.target.value);
-                    }}
-                  >
-                    <option value="everyone">Everyone</option>
-                    <option value="subscriber">Subscriber</option>
-                    <option value="vip">VIP</option>
-                    <option value="moderator">Moderator</option>
-                    <option value="broadcaster">Broadcaster</option>
-                  </select>
+                <div className="col-2 mb-3">
+                  <label className="form-label">Who Can Use This?</label>
+                  <p className="tip">Is it a specific user or a role?</p>
+                  <div className="pt-2">
+                    <span>User</span>
+                    <div className="form-check form-switch d-inline-block mx-2 align-middle">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id={`twitch-trigger-${trigger.id}-is-bound-to-role`}
+                        checked={trigger.isBoundToRole}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setTriggerField(
+                            triggerIndex,
+                            "isBoundToRole",
+                            e.target.checked
+                          );
+                        }}
+                      />
+                    </div>
+                    <span>Role</span>
+                  </div>
                 </div>
+                {!trigger.isBoundToRole && (
+                  <div className="col-2 mb-3">
+                    <label className="form-label">User</label>
+                    <p className="tip">The user who can use this trigger.</p>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="e.g. username"
+                      value={trigger.user}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setTriggerField(triggerIndex, "user", e.target.value);
+                      }}
+                    />
+                  </div>
+                )}
+                {trigger.isBoundToRole && (
+                  <div className="col-2 mb-3">
+                    <label className="form-label">Role</label>
+                    <p className="tip">Minimum role to use this trigger.</p>
+                    <select
+                      className="form-select"
+                      value={trigger.role}
+                      onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        setTriggerField(triggerIndex, "role", e.target.value);
+                      }}
+                    >
+                      <option value="everyone">Everyone</option>
+                      <option value="subscriber">Subscriber</option>
+                      <option value="vip">VIP</option>
+                      <option value="moderator">Moderator</option>
+                      <option value="broadcaster">Broadcaster</option>
+                    </select>
+                  </div>
+                )}
                 <div className="col-3 mb-3">
                   <label className="form-label">
                     {getTriggerLabel(trigger)}
@@ -273,27 +352,7 @@ export const TwitchSection = () => {
                     <option value="say">Speak Phrase</option>
                   </select>
                 </div>
-                {trigger.action === "tts" && (
-                  <div className="col-12">
-                    <div className="alert alert-warning" role="alert">
-                      <p className="fs-7 mb-0 text-tip-yellow">
-                        <b>Text to Speech:</b> The puppet will speak out loud
-                        the text the user typed into the command or reward.
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {trigger.action === "response" && (
-                  <div className="col-12">
-                    <div className="alert alert-warning" role="alert">
-                      <p className="fs-7 mb-0 text-tip-yellow">
-                        <b>Get ChatGPT Response:</b> The puppet will speak out
-                        loud a response from the ChatGPT model to what the user
-                        said to it.
-                      </p>
-                    </div>
-                  </div>
-                )}
+                <ActionInfo action={trigger.action} type={trigger.type} />
                 {trigger.action === "say" && (
                   <div className="col-12 mb-3">
                     <label className="form-label">Speak Phrase</label>

@@ -83,7 +83,7 @@ export const Settings = (props: SettingsProps) => {
 
   return (
     <div className="container-xxl py-4 bd-gray-800 settings-container">
-      <form onSubmit={onFormSubmit}>
+      <form onSubmit={onFormSubmit} className="clearfix">
         <SettingsNav />
         <hr />
         {activeTab === "identity" && <IdentitySection />}
@@ -94,7 +94,7 @@ export const Settings = (props: SettingsProps) => {
         <hr />
         <button
           type="submit"
-          className="btn btn-primary mb-3 float-end px-4 bg-gradient"
+          className="btn btn-primary float-end px-4 bg-gradient"
         >
           {buttonText}
         </button>

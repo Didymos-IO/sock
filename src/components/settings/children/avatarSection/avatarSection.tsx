@@ -135,6 +135,7 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "up")}
+                    disabled={index === 0 || layers.length === 1}
                   >
                     <Icons.ArrowBarUp />
                   </button>
@@ -142,6 +143,9 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "down")}
+                    disabled={
+                      index === layers.length - 1 || layers.length === 1
+                    }
                   >
                     <Icons.ArrowBarDown />
                   </button>
