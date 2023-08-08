@@ -23,7 +23,7 @@ export const TtsSection = () => {
         setSpeakers(response.speakers);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -34,7 +34,7 @@ export const TtsSection = () => {
         setSpeakers(response.speakers);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, [tts.optionsCoquiAi.model]);
 

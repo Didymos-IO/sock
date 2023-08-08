@@ -1,6 +1,7 @@
 import { ChatMessage } from "@/modules";
 
 export type SettingsContextType = {
+  activeTab: string;
   addProfile: () => void;
   changeIndex: (index: number) => void;
   deleteCurrentProfile: () => void;
@@ -9,9 +10,11 @@ export type SettingsContextType = {
   loadSettings: () => Promise<Settings>;
   saveSettings: () => Promise<void>;
   settings: Settings;
+  setActiveTab: (tab: string) => void;
   setField: (section: string, field: string, value: any) => void;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   setLayerField: (layer: number, field: string, value: any) => void;
+  setTriggerField: (index: number, field: string, value: any) => void;
   setCoquiAiOptionField: (field: string, value: any) => void;
   setWsOptionField: (field: string, value: any) => void;
 };
@@ -35,6 +38,8 @@ export type StageContextType = {
   setIsThinking: React.Dispatch<React.SetStateAction<boolean>>;
   isTranscribing: boolean;
   setIsTranscribing: React.Dispatch<React.SetStateAction<boolean>>;
+  isTwitchActive: boolean;
+  setIsTwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
   location: string;
   setLocation: React.Dispatch<React.SetStateAction<string>>;
   newestBlob: Blob | undefined;
@@ -55,6 +60,17 @@ export type StageContextType = {
   setWordCountBeforeResponse: React.Dispatch<React.SetStateAction<number>>;
 };
 
+export type TwitchContextType = {
+  channel: string;
+  isTwitchConnected: boolean;
+  triggerLog: TwitchTriggerEvent[];
+  triggers: TwitchTrigger[];
+  twitchLog: TwitchChatMessage[];
+  disconnect: () => void;
+  joinChannel: (channel: string) => void;
+  setTriggers: React.Dispatch<React.SetStateAction<TwitchTrigger[]>>;
+};
+
 export type Settings = {
   profiles: SettingsProfile[];
 };
@@ -64,6 +80,7 @@ export type SettingsProfile = {
   identity: IdentitySettings;
   openAiApi: OpenAiApiSettings;
   tts: TtsSettings;
+  twitch: TwitchSettings;
   avatar: AvatarSettings;
 };
 
@@ -117,4 +134,55 @@ export type AvatarLayerSettings = {
   altPose1: string;
   altPose2: string;
   default: string;
+};
+
+export type TwitchSettings = {
+  channel: string;
+  triggers: TwitchTrigger[];
+};
+
+export type TwitchTrigger = {
+  id: number;
+  description: string;
+  type: "command" | "reward" | "wordcount" | "attention";
+  command: string;
+  rewardId: string;
+  isBoundToRole: boolean;
+  role: "broadcaster" | "mod" | "vip" | "everyone" | "subscriber";
+  user: string;
+  action: "tts" | "response" | "say";
+  text: string;
+  isActive: boolean;
+  cooldown: number;
+};
+
+export type TwitchChatMessage = {
+  id: string;
+  command: string;
+  message: string;
+  rewardId: string;
+  timestamp: string;
+  userName: string;
+  userId: string;
+  userRoles: TwitchUserRoles;
+};
+
+export type TwitchTriggerEvent = {
+  id: string;
+  messageId: string;
+  triggerId: number;
+  timestamp: string;
+};
+
+export type TwitchUserRoles = {
+  broadcaster: boolean;
+  mod: boolean;
+  subscriber: boolean;
+  vip: boolean;
+};
+
+export type TriggerCheckResponse = {
+  isTriggered: boolean;
+  triggerLogItem?: TwitchTriggerEvent;
+  messageLogItem?: TwitchChatMessage;
 };

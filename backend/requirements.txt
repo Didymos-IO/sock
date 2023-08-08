@@ -14,4 +14,5 @@ flask
 flask_cors
 openai
 python-dotenv
-TTS
+TTS==0.14.0
+numpy==1.23.5

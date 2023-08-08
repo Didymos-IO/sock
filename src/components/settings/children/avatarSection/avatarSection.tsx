@@ -3,8 +3,9 @@ import { ChangeEvent, useContext, useState } from "react";
 import { Icons } from "@/components";
 import { Avatar } from "@/components/stage/children";
 import { SettingsContext } from "@/state";
+import { AvatarLayerSettings } from "@/types";
 
-const blankLayer = {
+const blankLayer: AvatarLayerSettings = {
   id: 0,
   name: "",
   path: "",
@@ -134,6 +135,7 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "up")}
+                    disabled={index === 0 || layers.length === 1}
                   >
                     <Icons.ArrowBarUp />
                   </button>
@@ -141,6 +143,9 @@ export const AvatarSection = () => {
                     type="button"
                     className="btn btn-primary bg-gradient me-2"
                     onClick={() => handleMoveLayer(layer.id, "down")}
+                    disabled={
+                      index === layers.length - 1 || layers.length === 1
+                    }
                   >
                     <Icons.ArrowBarDown />
                   </button>

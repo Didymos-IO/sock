@@ -16,3 +16,23 @@
   display: block;
   height: 1px;
 }
+
+.tt-log {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.tt-log-content {
+  height: 120px;
+  overflow-y: scroll;
+}
+
+.tt-log-content::-webkit-scrollbar {
+  display: none;
+}
+
+.tt-log-anchor {
+  display: block;
+  height: 1px;
+}
+

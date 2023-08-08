@@ -47,3 +47,32 @@
   right: 0;
   width: auto !important;
 }
+
+.nav.settings-nav li {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.nav.settings-nav a {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.nav.settings-nav a.active {
+  color: white !important;
+}
+
+.nav.settings-nav li:has(a.active) {
+  border-bottom: 2px solid white;
+}
+
+.profile-select {
+  padding-right: 36px !important;
+}
+
+.bar-barrier {
+  border-left: solid 2px white;
+  width: 0px;
+  height: 38px;
+  opacity: 0.25;
+}

@@ -16,7 +16,7 @@ export const NavLink = (props: NavLinkProps) => {
         className={`nav-link text-white ${
           isActive ? "fw-semibold" : ""
         } py-0 pe-0`}
-        href={`#${location}`}
+        href={`?loc=${location}`}
         onClick={onClick}
       >
         {children}
