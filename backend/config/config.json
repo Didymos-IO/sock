@@ -89,6 +89,20 @@
                         "text": "",
                         "type": "reward",
                         "user": ""
+                    },
+                    {
+                        "id": 1691534775689,
+                        "description": "About Riot",
+                        "type": "command",
+                        "command": "!aboutriot",
+                        "rewardId": "",
+                        "isBoundToRole": true,
+                        "role": "everyone",
+                        "action": "say",
+                        "text": "Hello, I'm Riot! I was made by Whysper with art by Adara, and code by Kyle, and I run on OpenAI's ChatGPT.",
+                        "user": "",
+                        "isActive": true,
+                        "cooldown": 0
                     }
                 ]
             }
