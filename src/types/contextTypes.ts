@@ -28,6 +28,8 @@ export type StageContextType = {
   setHaveRequestedStop: React.Dispatch<React.SetStateAction<boolean>>;
   isActive: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  isChatReadOutloud: boolean;
+  setIsChatReadOutloud: React.Dispatch<React.SetStateAction<boolean>>;
   isRecording: boolean;
   setIsRecording: React.Dispatch<React.SetStateAction<boolean>>;
   isSpeaking: boolean;

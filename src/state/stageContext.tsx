@@ -24,6 +24,7 @@ export const StageProvider = (props: StageProviderProps) => {
   const [isTTSSpeaking, setIsTTSSpeaking] = useState(false);
   const [isTwitchActive, setIsTwitchActive] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [isChatReadOutloud, setIsChatReadOutloud] = useState(false);
   const [location, setLocation] = useState("");
   const [newestBlob, setNewestBlob] = useState<Blob>();
   const [onlyRespondWhenSpokenTo, setOnlyRespondWhenSpokenTo] = useState(false);
@@ -44,6 +45,8 @@ export const StageProvider = (props: StageProviderProps) => {
       setHaveRequestedStop,
       isActive,
       setIsActive,
+      isChatReadOutloud,
+      setIsChatReadOutloud,
       isRecording,
       setIsRecording,
       isSpeaking,
@@ -82,6 +85,7 @@ export const StageProvider = (props: StageProviderProps) => {
     chatHistory,
     haveRequestedStop,
     isActive,
+    isChatReadOutloud,
     isRecording,
     isSpeaking,
     isSpeechSynthesisActive,
