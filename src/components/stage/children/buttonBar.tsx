@@ -19,10 +19,12 @@ export const ButtonBar = (props: ButtonBarProps) => {
   } = props;
   const {
     isActive,
+    isChatReadOutloud,
     isSpeechSynthesisActive,
     isTwitchActive,
     haveRequestedStop,
     onlyRespondWhenSpokenTo,
+    setIsChatReadOutloud,
     setOnlyRespondWhenSpokenTo,
   } = useContext(StageContext)!;
   const isTranscriptionActive = !haveRequestedStop;
@@ -75,11 +77,14 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Speaker isActive={isSpeechSynthesisActive} />
         </button>
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 text-dark`}
-          title="Log speech to chat"
-          disabled={true}
+          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+            isChatReadOutloud ? "" : "text-dark"
+          }`}
+          title={isChatReadOutloud ? "Don't read outloud" : "Read chat outloud"}
+          disabled={!isActive}
+          onClick={() => setIsChatReadOutloud(!isChatReadOutloud)}
         >
-          <Icons.Terminal />
+          <Icons.Robot />
         </button>
         {/*
         <button

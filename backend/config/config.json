@@ -46,7 +46,7 @@
             },
             "saveFileVersion": "1.0.0",
             "tts": {
-                "engine": "WebSpeech",
+                "engine": "Coqui-AI",
                 "optionsCoquiAi": {
                     "emotion": "Dull",
                     "model": "tts_models/en/vctk/vits",
@@ -91,18 +91,18 @@
                         "user": ""
                     },
                     {
-                        "id": 1691534775689,
-                        "description": "About Riot",
-                        "type": "command",
-                        "command": "!aboutriot",
-                        "rewardId": "",
-                        "isBoundToRole": true,
-                        "role": "everyone",
                         "action": "say",
-                        "text": "Hello, I'm Riot! I was made by Whysper with art by Adara, and code by Kyle, and I run on OpenAI's ChatGPT.",
-                        "user": "",
+                        "command": "!aboutriot",
+                        "cooldown": 0,
+                        "description": "About Riot",
+                        "id": 1691534775689,
                         "isActive": true,
-                        "cooldown": 0
+                        "isBoundToRole": true,
+                        "rewardId": "",
+                        "role": "everyone",
+                        "text": "Hello, I'm Riot! I was made by Whysper with art by Adara, and code by Kyle, and I run on OpenAI's ChatGPT.",
+                        "type": "command",
+                        "user": ""
                     }
                 ]
             }

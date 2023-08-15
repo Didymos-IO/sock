@@ -30,7 +30,8 @@ const shutUp = () => {
 const speak = (
   text: string,
   settings: TtsSettings,
-  onStartSpeaking?: () => void
+  onStartSpeaking?: () => void,
+  onStopSpeaking?: () => void
 ): Promise<string> => {
   if (settings.engine === "Coqui-AI") {
     const { optionsCoquiAi } = settings;
@@ -41,13 +42,13 @@ const speak = (
       emotion: optionsCoquiAi.emotion,
     };
 
-    return speakViaCoqui(text, coquiOptions, onStartSpeaking);
+    return speakViaCoqui(text, coquiOptions, onStartSpeaking, onStopSpeaking);
   } else {
     const { optionsWebSpeech } = settings;
     if (onStartSpeaking) {
       onStartSpeaking();
     }
-    return speakViaWebSpeech(text, optionsWebSpeech);
+    return speakViaWebSpeech(text, optionsWebSpeech, onStopSpeaking);
   }
 };
 
@@ -57,7 +58,8 @@ const speak = (
 const speakViaCoqui = async (
   text: string,
   options?: TTSCoquiOptions,
-  onStartSpeaking?: () => void
+  onStartSpeaking?: () => void,
+  onStopSpeaking?: () => void
 ): Promise<string> => {
   const start = Date.now();
   let end: number = 0;
@@ -70,6 +72,9 @@ const speakViaCoqui = async (
         onStartSpeaking();
       }
       await _playAudioBuffer(wav);
+      if (onStopSpeaking) {
+        onStopSpeaking();
+      }
       const time = convertMsToSeconds(end - start);
       return time;
     });
@@ -80,7 +85,8 @@ const speakViaCoqui = async (
  */
 const speakViaWebSpeech = (
   text: string,
-  options?: TTSWebSpeechOptions
+  options?: TTSWebSpeechOptions,
+  onStopSpeaking?: () => void
 ): Promise<string> => {
   return new Promise<string>((resolve) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -95,6 +101,9 @@ const speakViaWebSpeech = (
       utterance.rate = options.rate;
     }
     utterance.onend = () => {
+      if (onStopSpeaking) {
+        onStopSpeaking();
+      }
       resolve("00.00");
     };
     synthesis.speak(utterance);

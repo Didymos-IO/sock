@@ -2,7 +2,14 @@
 import { useContext, useEffect } from "react";
 import { ReactMic } from "react-mic";
 
-import { ChatMessage, Brain, Ears, Mouth, Personality } from "@/modules";
+import {
+  ChatMessage,
+  ChatResponse,
+  Brain,
+  Ears,
+  Mouth,
+  Personality,
+} from "@/modules";
 import { SettingsContext, StageContext, TwitchContext } from "@/state";
 
 import {
@@ -18,15 +25,8 @@ export const Stage = () => {
   const settingsContext = useContext(SettingsContext)!;
   const twitchContext = useContext(TwitchContext)!;
   const { index, loadSettings, settings } = settingsContext;
-  const {
-    channel,
-    disconnect,
-    isTwitchConnected,
-    setTriggers,
-    triggerLog,
-    twitchLog,
-    joinChannel,
-  } = twitchContext;
+  const { disconnect, setTriggers, triggerLog, twitchLog, joinChannel } =
+    twitchContext;
   const profiles = settings.profiles;
   const triggers = profiles[index].twitch.triggers;
   const { identity, openAiApi, tts } = profiles[index];
@@ -85,7 +85,10 @@ export const Stage = () => {
             talk(ttsMessage);
             break;
           case "response":
-            thinkUpResponse(`${message.userName} says, '${message.message}'`);
+            thinkUpResponse(
+              `${message.userName} says, '${message.message}'`,
+              context.isChatReadOutloud
+            );
             break;
           case "say":
             const sayMessage = {
@@ -130,7 +133,10 @@ export const Stage = () => {
   };
 
   const handleChatBoxSubmit = (text: string) => {
-    thinkUpResponse(Ears.cleanUpTextHeard(text, identity)); // nosonar
+    thinkUpResponse(
+      Ears.cleanUpTextHeard(text, identity),
+      context.isChatReadOutloud
+    ); // nosonar
   };
 
   const handleMicData = (recordedBlob: any) => {
@@ -201,18 +207,58 @@ export const Stage = () => {
     context.setIsTTSSpeaking(false);
   };
 
-  const thinkUpResponse = async (text: string) => {
-    context.setIsThinking(true);
+  const thinkUpResponse = async (
+    text: string,
+    shouldSpeakTextFirst?: boolean
+  ) => {
     context.setTranscribedText("");
     const userMessage = { role: "user", content: text };
     context.setChatHistory([...context.chatHistory, userMessage]);
-    const responseFromBrain = await Brain.thinkUpResponse(
-      text,
-      context.chatHistory,
-      identity,
-      openAiApi,
-      true
-    );
+    let responseFromBrain: ChatResponse;
+    if (shouldSpeakTextFirst) {
+      const talking = Mouth.speak(
+        text,
+        {
+          engine: "WebSpeech",
+          optionsCoquiAi: {
+            emotion: "Dull",
+            model: "tts_models/en/vctk/vits",
+            rate: 1,
+            voice: "p233",
+          },
+          optionsWebSpeech: {
+            pitch: 1,
+            rate: 1,
+            voice: 0,
+          },
+        },
+        () => {},
+        () => {
+          context.setIsThinking(true);
+        }
+      );
+      const thinking = Brain.thinkUpResponse(
+        text,
+        context.chatHistory,
+        identity,
+        openAiApi,
+        true
+      );
+      const waiting = [await talking, await thinking];
+      responseFromBrain =
+        typeof waiting[0] !== "string"
+          ? (waiting[0] as ChatResponse)
+          : (waiting[1] as ChatResponse);
+    } else {
+      context.setIsThinking(true);
+      responseFromBrain = await Brain.thinkUpResponse(
+        text,
+        context.chatHistory,
+        identity,
+        openAiApi,
+        true
+      );
+    }
     const { message, time, tokensUsed: newTokensUsed } = responseFromBrain;
     context.setAiTime(time);
     context.setTokensUsed(context.tokensUsed + newTokensUsed);
