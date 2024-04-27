@@ -1,8 +1,8 @@
 .log {
-  height: 524px;
+  height: 560px;
 }
 
-.log-content { 
+.log-content {
   color: var(--lcars-red);
   height: 450px;
   overflow-y: scroll;
@@ -35,4 +35,3 @@
   display: block;
   height: 1px;
 }
-

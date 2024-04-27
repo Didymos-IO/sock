@@ -18,6 +18,8 @@ export const SettingsNav = () => {
   const { profiles } = settings;
   const [buttonText, setButtonText] = useState("Save");
 
+  console.log("settings", settings);
+
   const handleTabClick = (e: any) => {
     e.preventDefault();
     const tab = e.target.getAttribute("href")?.replace("#", "");
@@ -49,7 +51,7 @@ export const SettingsNav = () => {
 
   return (
     <div className="row">
-      <div className="col-4">
+      <div className="col-6">
         <ul className="nav settings-nav">
           <li className="nav-item">
             <a
@@ -58,6 +60,17 @@ export const SettingsNav = () => {
               onClick={handleTabClick}
             >
               Identity
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className={`nav-link ${
+                activeTab === "enforcement" ? "active" : ""
+              }`}
+              href="#enforcement"
+              onClick={handleTabClick}
+            >
+              Enforcement
             </a>
           </li>
           <li className="nav-item">
@@ -98,7 +111,7 @@ export const SettingsNav = () => {
           </li>
         </ul>
       </div>
-      <div className="col-8 text-end">
+      <div className="col-6 text-end">
         <span className="me-3 d-inline-block align-middle">Profile:</span>
         <select
           className="form-select profile-select d-inline-block w-auto align-top me-2"

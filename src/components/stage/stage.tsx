@@ -29,7 +29,7 @@ export const Stage = () => {
     twitchContext;
   const profiles = settings.profiles;
   const triggers = profiles[index].twitch.triggers;
-  const { identity, openAiApi, tts } = profiles[index];
+  const { enforcement, identity, openAiApi, tts } = profiles[index];
   let recordingTimer: any;
 
   useEffect(() => {
@@ -195,16 +195,27 @@ export const Stage = () => {
   };
 
   const talk = async (message: ChatMessage) => {
-    const time = await Mouth.speak(message.content, tts, () => {
+    if (context.isSpeechSynthesisActive) {
+      context.setIsThinking(true);
+      const time = await Mouth.speak(message.content, tts, () => {
+        context.setIsThinking(false);
+        context.setIsSpeaking(true);
+        const wordsBeforeNext = Personality.wordsBeforeSpeakingNext(
+          identity.chattiness
+        );
+        context.setWordCountBeforeResponse(wordsBeforeNext);
+      });
+      context.setTtsTime(time);
+      context.setIsSpeaking(false);
+      context.setIsTTSSpeaking(false);
+    } else {
+      const wordCount = message.content.split(" ").length;
+      const durationInMs = (wordCount / 2.5) * 1000; // average of 2.5 words per second
       context.setIsSpeaking(true);
-      const wordsBeforeNext = Personality.wordsBeforeSpeakingNext(
-        identity.chattiness
-      );
-      context.setWordCountBeforeResponse(wordsBeforeNext);
-    });
-    context.setTtsTime(time);
-    context.setIsSpeaking(false);
-    context.setIsTTSSpeaking(false);
+      setTimeout(() => {
+        context.setIsSpeaking(false);
+      }, durationInMs);
+    }
   };
 
   const thinkUpResponse = async (
@@ -241,6 +252,7 @@ export const Stage = () => {
         text,
         context.chatHistory,
         identity,
+        enforcement,
         openAiApi,
         true
       );
@@ -255,6 +267,7 @@ export const Stage = () => {
         text,
         context.chatHistory,
         identity,
+        enforcement,
         openAiApi,
         true
       );
@@ -306,7 +319,7 @@ export const Stage = () => {
           backgroundColor="#f6f6ef"
         />
       </div>
-      <div className="mb-3">
+      <div className="mb-2">
         <div className="puppet-wrapper d-inline-block align-top me-3">
           <Avatar />
         </div>
@@ -318,11 +331,11 @@ export const Stage = () => {
               onToggleTranscriptionClick={handleRecordClick}
               onToggleTwitchClick={handleToggleTwitchClick}
             />
-            <Status />
           </div>
           <Log />
         </div>
       </div>
+      <Status />
       <div
         className={`transcription-wrapper ${context.isActive ? "active" : ""}`}
       >

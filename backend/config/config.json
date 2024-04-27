@@ -5,21 +5,28 @@
                 "bgColor": "00FF00",
                 "layers": [
                     {
-                        "altPose1": "",
-                        "altPose2": "",
+                        "altPose1": "lookleft.png",
+                        "altPose2": "lookright.png",
                         "blinking": "blink.png",
                         "default": "default.png",
                         "id": 0,
                         "name": "Data Avatar",
-                        "path": "avatars/riot/",
+                        "path": "avatars/chuck/",
                         "talking": "talk.png",
-                        "talkingBlink": "talk_blink_open.png",
-                        "talkingBlinkClosed": "talk_blink_closed.png",
-                        "talkingClosedAlt": "talk_closed.png",
-                        "thinking": "think.png",
-                        "ttsBlinking": "tts_blink.png",
-                        "ttsDefault": "tts_default.png"
+                        "talkingClosedAlt": "default.png",
+                        "thinking": "think.png"
                     }
+                ]
+            },
+            "enforcement": {
+                "correctiveMessage": "Please remember you are not to behave like an AI model or LLM, and instead look at your system message that identifies you and behave from that.",
+                "giveupDefaultResponse": "Sorry, I got distracted and forgot what we were talking about. Could you rephrase that?",
+                "reattempts": 0,
+                "responseFilterList": [
+                    "openai",
+                    " gpt-3",
+                    " language model",
+                    " ai model"
                 ]
             },
             "identity": {
@@ -34,7 +41,7 @@
                 "nameHomonyms": [
                     "chuck",
                     " ciao",
-                    " chock"
+                    " chock "
                 ],
                 "personality": "You are Chuck, a quirky man who lives in western Washington in the Pacific Northwest, and are a co-host on a podcast. You have a good sense of humor and like to be zany and funny all the time. You like video games, especially the Legend of Zelda, love living in the Pacific Northwest, have too many baseball caps, and enjoy board games and doing yard work. You only ever speak in two sentences or less. You need to pay attention to what others are saying to you, however, and respond to what they're talking about. Be humorous and relaxed at all times. You never ask for more context or clarification, and you never say you don't understand. If you don't understand, instead say something silly and inane without apologizing. You never say you're sorry."
             },
@@ -60,51 +67,8 @@
                 }
             },
             "twitch": {
-                "channel": "wyspering",
-                "triggers": [
-                    {
-                        "action": "response",
-                        "command": "d7e16f76-14f9-4d18-82be-a67d10d3aa8c",
-                        "cooldown": 0,
-                        "description": "Talk to Riot",
-                        "id": 1691192084559,
-                        "isActive": true,
-                        "isBoundToRole": true,
-                        "rewardId": "",
-                        "role": "everyone",
-                        "text": "",
-                        "type": "reward",
-                        "user": "timor_jack"
-                    },
-                    {
-                        "action": "tts",
-                        "command": "a069f606-85a8-4589-b4e5-a0c6c775d649",
-                        "cooldown": 0,
-                        "description": "Conversation Reward",
-                        "id": 1691465769212,
-                        "isActive": true,
-                        "isBoundToRole": true,
-                        "rewardId": "",
-                        "role": "everyone",
-                        "text": "",
-                        "type": "reward",
-                        "user": ""
-                    },
-                    {
-                        "action": "say",
-                        "command": "!aboutriot",
-                        "cooldown": 0,
-                        "description": "About Riot",
-                        "id": 1691534775689,
-                        "isActive": true,
-                        "isBoundToRole": true,
-                        "rewardId": "",
-                        "role": "everyone",
-                        "text": "Hello, I'm Riot! I was made by Whysper with art by Adara, and code by Kyle, and I run on OpenAI's ChatGPT.",
-                        "type": "command",
-                        "user": ""
-                    }
-                ]
+                "channel": "",
+                "triggers": []
             }
         }
     ]

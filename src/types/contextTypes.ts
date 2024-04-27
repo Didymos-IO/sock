@@ -11,7 +11,7 @@ export type SettingsContextType = {
   saveSettings: () => Promise<void>;
   settings: Settings;
   setActiveTab: (tab: string) => void;
-  setField: (section: string, field: string, value: any) => void;
+  setField: (section: keyof SettingsProfile, field: string, value: any) => void;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   setLayerField: (layer: number, field: string, value: any) => void;
   setTriggerField: (index: number, field: string, value: any) => void;
@@ -83,6 +83,7 @@ export type Settings = {
 export type SettingsProfile = {
   saveFileVersion: string;
   identity: IdentitySettings;
+  enforcement: EnforcementSettings;
   openAiApi: OpenAiApiSettings;
   tts: TtsSettings;
   twitch: TwitchSettings;
@@ -96,6 +97,13 @@ export type IdentitySettings = {
   attentionWords: string[];
   chattiness: number;
   memory: number;
+};
+
+export type EnforcementSettings = {
+  responseFilterList: string[];
+  reattempts: number;
+  correctiveMessage: string;
+  giveupDefaultResponse: string;
 };
 
 export type OpenAiApiSettings = {

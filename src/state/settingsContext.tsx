@@ -1,12 +1,12 @@
 import React, { createContext, useMemo, useState } from "react";
-import { SettingsContextType, Settings } from "@/types";
+import { SettingsContextType, SettingsProfile, Settings } from "@/types";
 import { api } from "@/api";
 
 type SettingsProviderProps = {
   children: React.ReactNode;
 };
 
-const blankProfile = {
+export const blankProfile: SettingsProfile = {
   saveFileVersion: "1.0.0",
   identity: {
     name: "",
@@ -15,6 +15,20 @@ const blankProfile = {
     attentionWords: [],
     chattiness: 7.6,
     memory: 750,
+  },
+  enforcement: {
+    responseFilterList: [
+      "openai",
+      "gpt-3",
+      "language model",
+      "llm",
+      "chat gpt",
+    ],
+    reattempts: 3,
+    correctiveMessage:
+      "Please remember you are not to behave like an AI model or LLM, and instead look at your system message that identifies you and behave from that.",
+    giveupDefaultResponse:
+      "Sorry, I got distracted and forgot what we were talking about. Could you rephrase that?",
   },
   openAiApi: {
     temperature: 1,
@@ -53,6 +67,15 @@ const blankProfile = {
         altPose1: "",
         altPose2: "",
         default: "",
+        angryDefault: "",
+        angryBlinking: "",
+        angryTalking: "",
+        talkingClosedAlt: "",
+        talkingBlink: "",
+        talkingBlinkClosed: "",
+        ttsDefault: "",
+        ttsBlinking: "",
+        ttsTalking: "",
       },
     ],
   },
@@ -108,8 +131,15 @@ export const SettingsProvider = (props: SettingsProviderProps) => {
     setIsDirty(false);
   };
 
-  const setField = (section: string, field: string, value: any) => {
+  const setField = (
+    section: keyof SettingsProfile,
+    field: string,
+    value: any
+  ) => {
     let profile: any = getCurrentProfile();
+    if (!profile[section]) {
+      profile[section] = JSON.parse(JSON.stringify(blankProfile[section]));
+    }
     profile[section][field] = value;
     updateCurrentProfile(profile);
   };
