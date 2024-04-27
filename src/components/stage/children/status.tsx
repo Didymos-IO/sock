@@ -29,57 +29,61 @@ export const Status = () => {
   }
 
   return (
-    <div className="stat-holder d-inline-block align-top text-end fs-7">
-      <div className="session-usage">
+    <div className="stat-holder text-end fs-7 mb-1">
+      <span className="session-usage">
         <span>Tokens: {formatNumber(tokensUsed, 5)}</span>
         <span> • </span>
         <span>Session Cost ${calculateSessionCost()}</span>
-      </div>
-      <div className="performance">
+        <span> • </span>
+      </span>
+      <span className="performance">
         <span>Transcribe: {transcriptionTime}s</span>
         <span> • </span>
         <span>LLM: {aiTime}s</span>
         <span> • </span>
         <span>TTS: {ttsTime}s</span>
-      </div>
-      <div className="words-left">
-        {onlyRespondWhenSpokenTo ? (
-          <div>Only responds after name is spoken</div>
-        ) : (
-          <div>
-            Talks after {wordCountBeforeResponse - wordCount} more words
-          </div>
-        )}
-      </div>
-      <div className="API Statuses">
+      </span>
+      {isTranscribing && (
+        <span className="words-left">
+          <span> • </span>
+          {onlyRespondWhenSpokenTo ? (
+            <span>Only responds after name is spoken</span>
+          ) : (
+            <span>
+              Talks after {wordCountBeforeResponse - wordCount} more words
+            </span>
+          )}
+        </span>
+      )}
+      <span className="API Statuses d-inline-block align-middle ms-4">
         <small
-          className={`d-inline-flex mt-1 px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
+          className={`d-inline-flex px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
             isTranscribing
               ? "text-white border-white"
-              : "text-primary-emphasis border-primary-subtle"
+              : "text-primary-emphasis border-primary"
           } rounded-2 me-2`}
         >
           <Icons.Ear />
         </small>
         <small
-          className={`d-inline-flex mt-1 px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
+          className={`d-inline-flex px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
             isThinking
               ? "text-white border-white"
-              : "text-primary-emphasis border-primary-subtle"
+              : "text-primary-emphasis border-primary"
           } rounded-2 me-2`}
         >
           <Icons.CPU />
         </small>
         <small
-          className={`d-inline-flex mt-1 px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
+          className={`d-inline-flex px-1 py-1 mb-0 fw-semibold bg-gray-800 border ${
             isSpeaking
               ? "text-white border-white"
-              : "text-primary-emphasis border-primary-subtle"
+              : "text-primary-emphasis border-primary"
           } rounded-2`}
         >
           <Icons.ChatLeftQuote />
         </small>
-      </div>
+      </span>
     </div>
   );
 };

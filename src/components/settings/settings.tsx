@@ -1,10 +1,10 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 
-import { Icons } from "@/components";
 import { SettingsContext } from "@/state";
 
 import {
   AvatarSection,
+  EnforcementSection,
   IdentitySection,
   OpenAiSection,
   SettingsNav,
@@ -19,18 +19,7 @@ type SettingsProps = {
 export const Settings = (props: SettingsProps) => {
   const { onChangeTab } = props;
   const context = useContext(SettingsContext)!;
-  const {
-    activeTab,
-    addProfile,
-    changeIndex,
-    deleteCurrentProfile,
-    index,
-    isDirty,
-    loadSettings,
-    settings,
-    saveSettings,
-  } = context;
-  const { profiles } = settings;
+  const { activeTab, isDirty, loadSettings, saveSettings } = context;
   const [buttonText, setButtonText] = useState("Save");
 
   useEffect(() => {
@@ -44,6 +33,7 @@ export const Settings = (props: SettingsProps) => {
 
   useEffect(() => {
     onChangeTab(activeTab);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   useEffect(() => {
@@ -56,17 +46,6 @@ export const Settings = (props: SettingsProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDirty]);
-
-  const handleDeleteProfile = () => {
-    if (window.confirm("Are you sure you want to delete this profile?")) {
-      deleteCurrentProfile();
-    }
-  };
-
-  const handleIndexChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = parseInt(e.target.value);
-    changeIndex(value);
-  };
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,6 +66,7 @@ export const Settings = (props: SettingsProps) => {
         <SettingsNav />
         <hr />
         {activeTab === "identity" && <IdentitySection />}
+        {activeTab === "enforcement" && <EnforcementSection />}
         {activeTab === "gpt" && <OpenAiSection />}
         {activeTab === "voice" && <TtsSection />}
         {activeTab === "twitch" && <TwitchSection />}

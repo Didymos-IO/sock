@@ -19,6 +19,8 @@ export const chat = async (
     max_tokens: maxTokens,
   };
 
+  console.log("request", request);
+
   const response = await fetch("http://127.0.0.1:8000/chat", {
     method: "POST",
     headers: {

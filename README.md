@@ -8,7 +8,7 @@ Sock is an AI-controlled puppet that you can create your own custom avatar for a
 
 Sock operates through a [Next.js](https://nextjs.org/) application running in your web browser, which communicates with a [Python](https://www.python.org/downloads/) backend. This backend is responsible for managing the API calls to OpenAI, as well as running the Whisper transcription and Coqui-AI text-to-speech models.
 
-![Version](https://img.shields.io/badge/version-v0.6.1-blue)
+![Version](https://img.shields.io/badge/version-v0.8.0-blue)
 ![MIT License](https://img.shields.io/badge/license-MIT-green)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=flat&logo=openai&logoColor=white)
 ![Next JS](https://img.shields.io/badge/Next-black?style=flat&logo=next.js&logoColor=white)

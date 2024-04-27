@@ -34,8 +34,8 @@ export const ButtonBar = (props: ButtonBarProps) => {
   };
 
   return (
-    <div className="d-inline-block me-2">
-      <div className="mb-2">
+    <div className="">
+      <div id="power-button" className="mb-2 d-inline-block me-2">
         <button
           className={`activate-button btn ${
             isActive ? "btn-secondary" : "btn-primary"
@@ -47,9 +47,9 @@ export const ButtonBar = (props: ButtonBarProps) => {
           {isActive ? "Deactivate" : "Activate"}
         </button>
       </div>
-      <div>
+      <div className="d-inline-block">
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+          className={`btn btn-primary btn-lg d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
             isTranscriptionActive ? "" : "text-dark"
           }`}
           title={
@@ -63,7 +63,7 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Ear isActive={isTranscriptionActive} />
         </button>
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+          className={`btn btn-primary btn-lg d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
             isSpeechSynthesisActive ? "" : "text-dark"
           }`}
           onClick={onToggleSpeechSynthesisClick}
@@ -77,7 +77,7 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Speaker isActive={isSpeechSynthesisActive} />
         </button>
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+          className={`btn btn-primary btn-lg d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
             isChatReadOutloud ? "" : "text-dark"
           }`}
           title={isChatReadOutloud ? "Don't read outloud" : "Read chat outloud"}
@@ -94,7 +94,7 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.ChatLeftQuote />
         </button>*/}
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
+          className={`btn btn-primary btn-lg d-inline-block bg-gradient custom-shadow-sm me-2 px-2 ${
             isTwitchActive ? "" : "text-dark"
           }`}
           title={
@@ -106,7 +106,7 @@ export const ButtonBar = (props: ButtonBarProps) => {
           <Icons.Twitch />
         </button>
         <button
-          className={`btn btn-primary d-inline-block bg-gradient custom-shadow-sm px-2 ${
+          className={`btn btn-primary btn-lg d-inline-block bg-gradient custom-shadow-sm px-2 ${
             onlyRespondWhenSpokenTo ? "" : "text-dark"
           }`}
           title={

@@ -1,5 +1,9 @@
 import { api } from "@/api";
-import { IdentitySettings, OpenAiApiSettings } from "@/types";
+import {
+  EnforcementSettings,
+  IdentitySettings,
+  OpenAiApiSettings,
+} from "@/types";
 
 import { convertMsToSeconds } from "./";
 
@@ -21,6 +25,7 @@ const thinkUpResponse = async (
   newMessage: string,
   chatHistory: ChatMessage[],
   identity: IdentitySettings,
+  enforcement: EnforcementSettings,
   openAiApi: OpenAiApiSettings,
   logToConsole?: boolean
 ): Promise<ChatResponse> => {
@@ -38,15 +43,15 @@ const thinkUpResponse = async (
     memory
   );
   messagesToSend = messagesToSend.concat(messagesFromMemory);
+  console.log("messagesToSend:", messagesToSend);
   const start = Date.now();
-  const response = await api.chat(
+  const response = await _attemptToGetUnfilteredResponse(
     messagesToSend,
+    enforcement,
     openAiApi,
-    _calculateMaxTokens(messagesToSend, personality, openAiApi.maxTokens)
+    personality,
+    logToConsole
   );
-  if (logToConsole) {
-    console.log("AI response message:", response);
-  }
   const end = Date.now();
   const time = convertMsToSeconds(end - start);
   const tokensUsed = response.usage.total_tokens;
@@ -62,6 +67,72 @@ const thinkUpResponse = async (
 /* ------------------------------ PRIVATE ---------------------------------- */
 /* ------------------------------------------------------------------------- */
 
+const _attemptToGetUnfilteredResponse = async (
+  messages: ChatMessage[],
+  enforcement: EnforcementSettings,
+  openAiApi: OpenAiApiSettings,
+  personality: string,
+  logToConsole?: boolean
+) => {
+  let reattempts = enforcement.reattempts + 1; // we want it to attempt it at least once.
+  let tokensUsed = 0;
+  while (reattempts > 0) {
+    let response = await api.chat(
+      messages,
+      openAiApi,
+      _calculateMaxTokens(messages, personality, openAiApi.maxTokens)
+    );
+    tokensUsed += response.usage.total_tokens;
+    if (logToConsole) {
+      console.log("AI response message:", response);
+    }
+    if (_checkIfResponseTriggersFilters(response.message, enforcement)) {
+      if (logToConsole) {
+        console.log(
+          "Response triggered filters, must reattempt if able to do so."
+        );
+      }
+      reattempts--;
+      if (enforcement.correctiveMessage && reattempts > 0) {
+        const messagesWithInstruction = messages.concat([
+          { role: "user", content: enforcement.correctiveMessage },
+        ]);
+        if (logToConsole) {
+          console.log("Sending corrective message.");
+        }
+        const responseToInstruction = await api.chat(
+          messagesWithInstruction,
+          openAiApi,
+          _calculateMaxTokens(
+            messagesWithInstruction,
+            personality,
+            openAiApi.maxTokens
+          )
+        );
+        tokensUsed += responseToInstruction.usage.total_tokens;
+      }
+    } else {
+      response.usage.total_tokens = tokensUsed;
+      return response;
+    }
+  }
+  if (logToConsole) {
+    console.log("Giving up on reattempts. Returning default response.");
+  }
+  const response = {
+    message: { role: "system", content: enforcement.giveupDefaultResponse },
+    usage: {
+      completion_tokens: 0,
+      prompt_tokens: 0,
+      total_tokens: tokensUsed,
+    },
+  };
+  if (logToConsole) {
+    console.log("Default response message:", response);
+  }
+  return response;
+};
+
 const _calculateMaxTokens = (
   messages: ChatMessage[],
   personality: string,
@@ -73,6 +144,19 @@ const _calculateMaxTokens = (
   }
   const remains = 4096 - tokens;
   return Math.min(remains, maxTokens);
+};
+
+const _checkIfResponseTriggersFilters = (
+  message: ChatMessage,
+  enforcement: EnforcementSettings
+) => {
+  const filters = enforcement.responseFilterList;
+  const content = message.content.toLowerCase();
+  for (const filter of filters) {
+    if (content.includes(filter.toLowerCase().trim())) {
+      return true;
+    }
+  }
 };
 
 const _estimateTokensForString = (text: string): number => {
